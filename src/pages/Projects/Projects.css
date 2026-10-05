@@ -1,0 +1,34 @@
+.projects-hero {
+  background: #0f4c81;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 5rem 2rem;
+}
+
+.projects-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 4rem 1rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem;
+
+  border: 1px solid #ddd;
+
+  border-radius: 8px;
+
+  margin-bottom: 2rem;
+}
+
+.projects-grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 2rem;
+}
