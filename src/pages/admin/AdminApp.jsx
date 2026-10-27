@@ -4,6 +4,7 @@ import { firebaseReady, getAuthKit, getDb } from '../../lib/firebase.js'
 import CollectionEditor from './CollectionEditor.jsx'
 import DocEditor from './DocEditor.jsx'
 import Messages from './Messages.jsx'
+import Starter from './Starter.jsx'
 import {
   contactDefaults, contactFields, galleryConfig, parliamentDefaults, parliamentFields,
   pressConfig, profileDefaults, profileFields, projectsConfig,
@@ -18,6 +19,7 @@ const NAV = [
   ['gallery', 'Gallery'],
   ['messages', 'Messages'],
   ['contact', 'Contact and social links'],
+  ['starter', 'Fill the database'],
 ]
 
 function authMessage(code = '') {
@@ -81,6 +83,7 @@ export default function AdminApp() {
   const [status, setStatus] = useState(firebaseReady ? 'loading' : 'off') // loading | out | noaccess | in | off
   const [user, setUser] = useState(null)
   const [unread, setUnread] = useState(0)
+  const [emptyDb, setEmptyDb] = useState(false)
 
   useEffect(() => {
     if (!firebaseReady) return
@@ -119,6 +122,8 @@ export default function AdminApp() {
     ;(async () => {
       const { fs, db } = await getDb()
       try {
+        const prof = await fs.getDoc(fs.doc(db, 'site', 'profile'))
+        if (alive) setEmptyDb(!prof.exists())
         const snap = await fs.getDocs(fs.collection(db, 'messages'))
         if (alive) setUnread(snap.docs.filter((d) => !d.data().read).length)
       } catch {
@@ -169,6 +174,9 @@ export default function AdminApp() {
     case 'gallery':
       body = <CollectionEditor {...galleryConfig} />
       break
+    case 'starter':
+      body = <Starter />
+      break
     case 'messages':
       body = <Messages onCount={setUnread} />
       break
@@ -197,6 +205,11 @@ export default function AdminApp() {
         </div>
       </aside>
       <main className="adm-main" key={section}>
+        {emptyDb && section !== 'starter' && (
+          <p className="adm-ok" role="status">
+            The database is new and empty. <Link to="/admin/starter">Fill it with the site's verified content</Link> so every section opens ready to edit.
+          </p>
+        )}
         {body}
         <p className="adm-credit">Built by SpenceTec and Logistics Limited</p>
       </main>

@@ -96,13 +96,27 @@ export const defaults = {
   press: [
     {
       id: 'committee-vice-chair',
-      title: 'Hon. Duncan Mathenge elected Vice-Chairperson of the National Cohesion and Equal Opportunity Committee',
-      outlet: 'Parliament of Kenya',
-      date: '',
-      url: '',
+      title: 'Hon. Mathenge elected Vice-Chairperson of the National Cohesion and Equal Opportunity Committee',
+      outlet: 'The Star',
+      date: '2025-08-05',
+      url: 'https://www.the-star.co.ke/news/2025-08-05-mp-mathenge-named-cohesion-committee-vice-chair',
       image: '',
       category: 'Parliament',
-      summary: 'Members of the committee elected the Nyeri Town MP unopposed to the vice-chair’s seat.',
+      summary:
+        'The Nyeri Town MP was elected unopposed to the committee’s vice-chair, the seat left vacant after the death of Kasipul MP Ong’ondo Were, and pledged to work closely with fellow members.',
+      status: 'published',
+    },
+    {
+      id: 'elected-2022',
+      title: 'Duncan Mathenge elected Member of Parliament for Nyeri Town',
+      outlet: 'Citizen Digital',
+      date: '2022-08-11',
+      url: 'https://citizen.digital/news/ngunjiri-wambugu-loses-nyeri-town-mp-seat-to-udas-duncan-mathenge-n303799',
+      image: '',
+      category: 'Press coverage',
+      summary:
+        'The IEBC declared the UDA candidate winner of the Nyeri Town seat. He thanked voters and said his focus would now turn to the concerns of residents.',
+      status: 'published',
     },
   ],
   gallery: [],

@@ -35,3 +35,7 @@ npm run build
 npx wrangler deploy
 ```
 `wrangler.jsonc` serves `dist/` with single-page-app fallback, so `/about`, `/admin` etc. work on refresh.
+
+## Filling a new database
+
+After Firebase is connected and your account is in `admins`, open `/admin/starter` (“Fill the database” in the dashboard menu) and press the button. It writes the profile, career, education, Parliament record, contact details and news into Firestore. Items already in the database are kept unless you tick “Replace”, so it is safe to press again.
