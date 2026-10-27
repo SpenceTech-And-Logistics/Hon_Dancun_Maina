@@ -1,16 +1,37 @@
-# React + Vite
+# Hon. Duncan Maina Mathenge: official website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Multi-page React + Vite site for the Member of Parliament for Nyeri Town, with a Firebase admin dashboard at `/admin`.
+Built by SpenceTec and Logistics Limited.
 
-Currently, two official plugins are available:
+## Run locally
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run lint
+npm run build    # output in dist/
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Content
+The site ships with built-in content (profile, committees, Bills, motions) taken from the Parliament of Kenya, Mzalendo and TrackMinster.
+Once Firebase is connected, anything saved in the dashboard replaces the built-in version.
 
-## React Compiler
+**Portrait:** put `portrait.jpg` (or `.png` / `.webp`) in `src/assets/images/`, or upload it from the dashboard (Profile and career).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Firebase setup (free Spark plan, no Storage needed)
+1. Firebase console: create a project, then Build, Firestore Database, create (production mode).
+2. Build, Authentication, Sign-in method: enable **Email/Password**. Add the office users under Users.
+3. Project settings, Your apps, add a **Web app**. Copy `apiKey`, `authDomain`, `projectId`, `appId` into `site.config.js`.
+4. Firestore, Rules: paste the contents of `firestore.rules` and Publish.
+5. Make someone an administrator: Firestore, start collection `admins`, document ID = that user's **UID** (shown on the "No access" screen after they sign in), field `ok` = boolean `true`.
+6. Authentication, Settings, Authorized domains: add the live domain and the `*.workers.dev` address.
+7. Redeploy. Open `/admin`.
 
-## Expanding the ESLint configuration
+Photos are resized in the browser and stored in Firestore (about 100 to 200 KB each; a project can hold up to 5). Videos are links (YouTube, Google Drive, Facebook, TikTok).
+Projects and News support **Import from file** (CSV or JSON; duplicates by title are skipped). Use the "CSV template" button for the columns.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deploy to Cloudflare Workers
+```bash
+npm run build
+npx wrangler deploy
+```
+`wrangler.jsonc` serves `dist/` with single-page-app fallback, so `/about`, `/admin` etc. work on refresh.
