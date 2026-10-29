@@ -24,11 +24,50 @@ function plan() {
   ]
 }
 
+const norm = (t) => String(t || '').trim().toLowerCase().replace(/\s+/g, ' ')
+
 async function check() {
   const { fs, db } = await getDb()
   const list = plan()
+  const titles = {}
+  for (const c of ['projects', 'press']) {
+    const snap = await fs.getDocs(fs.collection(db, c))
+    titles[c] = new Set(snap.docs.map((d) => norm(d.data().title)))
+  }
   const exists = await Promise.all(list.map((r) => fs.getDoc(fs.doc(db, ...r.path)).then((s) => s.exists())))
-  return list.map((r, i) => ({ ...r, exists: exists[i] }))
+  return list.map((r, i) => ({ ...r, exists: exists[i], sameTitle: !exists[i] && Boolean(titles[r.path[0]]?.has(norm(r.data.title))) }))
+}
+
+/** Finds items in projects and news that share a title. Keeps one of each (the seed- copy, so photos
+ * in src/assets match it), moves any photos from the extra copies onto it, and deletes the extras. */
+async function dedupe(apply) {
+  const { fs, db } = await getDb()
+  let removed = 0
+  const batch = fs.writeBatch(db)
+  for (const c of ['projects', 'press']) {
+    const snap = await fs.getDocs(fs.collection(db, c))
+    const groups = {}
+    for (const d of snap.docs) (groups[norm(d.data().title)] ||= []).push(d)
+    for (const docs of Object.values(groups)) {
+      if (docs.length < 2) continue
+      docs.sort((a, b) => Number(b.id.startsWith('seed-')) - Number(a.id.startsWith('seed-')) || (a.data().createdAt?.seconds || 0) - (b.data().createdAt?.seconds || 0))
+      const [keep, ...extra] = docs
+      const k = keep.data()
+      if (c === 'projects') {
+        const photos = [...new Set([...(k.photos || []), ...extra.flatMap((d) => d.data().photos || [])])]
+        if (photos.length !== (k.photos || []).length && apply) batch.update(keep.ref, { photos: photos.slice(0, 5) })
+      } else if (!k.image) {
+        const img = extra.map((d) => d.data().image).find(Boolean)
+        if (img && apply) batch.update(keep.ref, { image: img })
+      }
+      for (const d of extra) {
+        if (apply) batch.delete(d.ref)
+        removed++
+      }
+    }
+  }
+  if (apply && removed) await batch.commit()
+  return removed
 }
 
 export default function Starter() {
@@ -56,7 +95,7 @@ export default function Starter() {
       const batch = fs.writeBatch(db)
       let n = 0
       for (const r of rows) {
-        if (r.exists && !replace) continue
+        if ((r.exists || r.sameTitle) && !replace) continue
         batch.set(fs.doc(db, ...r.path), r.stamp ? { ...r.data, createdAt: fs.serverTimestamp() } : r.data)
         n++
       }
@@ -70,7 +109,29 @@ export default function Starter() {
     setBusy(false)
   }
 
-  const missing = rows ? rows.filter((r) => !r.exists).length : 0
+  const missing = rows ? rows.filter((r) => !r.exists && !r.sameTitle).length : 0
+  const [dupes, setDupes] = useState(null)
+  useEffect(() => {
+    let alive = true
+    dedupe(false).then((n) => alive && setDupes(n)).catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [rows])
+
+  async function clean() {
+    setBusy(true)
+    setMsg(null)
+    try {
+      const n = await dedupe(true)
+      setRows(await check())
+      refresh()
+      setMsg({ text: `Removed ${n} duplicate${n === 1 ? '' : 's'}. One copy of each project and story is kept, with any photos from the copies moved onto it.` })
+    } catch (ex) {
+      setMsg({ bad: true, text: ex.message })
+    }
+    setBusy(false)
+  }
 
   return (
     <>
@@ -81,6 +142,13 @@ export default function Starter() {
         </div>
       </div>
       {msg && <p className={msg.bad ? 'adm-alert' : 'adm-ok'} role="status">{msg.text}</p>}
+      {dupes > 0 && (
+        <div className="adm-panel" style={{ borderColor: '#a8322a' }}>
+          <h2>{dupes} duplicate{dupes === 1 ? '' : 's'} found</h2>
+          <p>Some projects or news stories are in the database more than once, usually because the CSV was imported as well as filled from here. This keeps one copy of each, moves any photos from the extra copies onto it, and deletes the extras.</p>
+          <div><button type="button" className="adm-btn" onClick={clean} disabled={busy}>{busy ? 'Working…' : `Remove ${dupes} duplicate${dupes === 1 ? '' : 's'}`}</button></div>
+        </div>
+      )}
       <div className="adm-panel flush">
         {!rows ? (
           <p className="adm-pad">Checking the database…</p>
@@ -93,7 +161,7 @@ export default function Starter() {
                   <tr key={r.path.join('/')}>
                     <td>{r.label}</td>
                     <td><code>{r.path.join('/')}</code></td>
-                    <td>{r.exists ? (replace ? 'Yes, will be replaced' : 'Yes, kept as is') : 'Not yet'}</td>
+                    <td>{r.exists ? (replace ? 'Yes, will be replaced' : 'Yes, kept as is') : r.sameTitle ? 'Yes (imported), kept as is' : 'Not yet'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -111,7 +179,7 @@ export default function Starter() {
             {busy ? 'Writing…' : replace ? 'Write everything' : missing ? `Add ${missing} missing item${missing === 1 ? '' : 's'}` : 'All filled'}
           </button>
         </div>
-        <small>Projects and gallery stay empty until the office adds real Nyeri Town projects and photos; the site hides those sections cleanly until then.</small>
+        <small>Items already in the database under the same title (for example from a CSV import) are not added again.</small>
       </div>
     </>
   )
