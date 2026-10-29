@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PageHead from '../components/PageHead.jsx'
+import NewsSlider from '../components/NewsSlider.jsx'
 import { Reveal } from '../components/Reveal.jsx'
 import { formatDate } from '../lib/media.js'
 import { useContent } from '../lib/useContent.js'
@@ -9,7 +10,8 @@ export default function News() {
   const [cat, setCat] = useState('All')
   const cats = ['All', ...new Set(press.map((n) => n.category).filter(Boolean))]
   const shown = cat === 'All' ? press : press.filter((n) => n.category === cat)
-  const [first, ...rest] = shown
+  const top = shown.slice(0, 5)
+  const rest = shown.slice(5)
   const meta = (n) => [n.outlet, formatDate(n.date)].filter(Boolean).join(' · ')
 
   return (
@@ -21,21 +23,9 @@ export default function News() {
             {cats.map((c) => <button key={c} type="button" className="chip" aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>)}
           </div>
         )}
-        {first && (
-          <Reveal className="card card-link" style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 24 }}>
-            <div className="card-img" style={{ flex: '1 1 340px', minHeight: 260, aspectRatio: 'auto' }}>
-              {first.image ? <img src={first.image} alt="" loading="lazy" /> : <div className="img-fallback">DM</div>}
-            </div>
-            <div style={{ flex: '1 1 380px', padding: 'clamp(24px,4vw,44px)', display: 'flex', flexDirection: 'column', gap: 14, justifyContent: 'center' }}>
-              <span className="meta">{meta(first)}</span>
-              <h2 style={{ font: '500 clamp(26px,3vw,36px)/1.15 var(--serif)' }}>{first.title}</h2>
-              {first.summary && <p className="muted" style={{ lineHeight: 1.6 }}>{first.summary}</p>}
-              {first.url && <a href={first.url} target="_blank" rel="noreferrer" className="link-arrow">Read the post <span>→</span></a>}
-            </div>
-          </Reveal>
-        )}
+        <NewsSlider items={top} key={cat} />
         {rest.length > 0 && (
-          <div className="list">
+          <div className="list" style={{ marginTop: 32 }}>
             {rest.map((n) => (
               <Reveal className="list-row" key={n.id}>
                 {n.image && <img src={n.image} alt="" loading="lazy" style={{ width: 120, height: 80, objectFit: 'cover', borderRadius: 6 }} />}

@@ -44,8 +44,8 @@ export function ContentProvider({ children }) {
   const value = useMemo(() => {
     const r = remote
     const published = (items) => items.filter((i) => i.status !== 'draft')
-    const projects = r && r.projects.length ? published(r.projects).sort(byDateDesc) : defaults.projects
-    const press = r && r.press.length ? published(r.press).sort(byDateDesc) : defaults.press
+    const projects = r && r.projects.length ? published(r.projects).sort(byDateDesc) : [...defaults.projects].sort(byDateDesc)
+    const press = r && r.press.length ? published(r.press).sort(byDateDesc) : [...defaults.press].sort(byDateDesc)
     const gallery = r && r.gallery.length ? published(r.gallery) : defaults.gallery
     return {
       profile: merge(defaults.profile, r?.docs.profile),
