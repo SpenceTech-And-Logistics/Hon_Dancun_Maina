@@ -37,7 +37,7 @@ export const contactFields = [
   { key: 'parliament', label: 'Parliament address' },
   { key: 'email', label: 'Office email', type: 'email' },
   { key: 'phone', label: 'Office phone', type: 'tel' },
-  { key: 'social', label: 'Social links (Facebook, X, YouTube, TikTok…)', type: 'list', noun: 'link', wide: true, fields: [{ key: 'label', label: 'Name' }, { key: 'url', label: 'Link', type: 'url' }] },
+  { key: 'social', label: 'Social links (Facebook, X, YouTube, TikTok…)', hint: 'Paste the full link. The site shows the matching icon automatically.', type: 'list', noun: 'link', wide: true, fields: [{ key: 'label', label: 'Name' }, { key: 'url', label: 'Link', type: 'url' }] },
   { key: 'links', label: 'Other links', type: 'list', noun: 'link', wide: true, fields: [{ key: 'label', label: 'Name' }, { key: 'url', label: 'Link', type: 'url' }] },
 ]
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useContent } from '../lib/useContent.js'
+import SocialIcons from './SocialIcons.jsx'
 
 export default function Footer() {
   const { contact } = useContent()
@@ -29,6 +30,7 @@ export default function Footer() {
           <span>{contact.parliament}</span>
           {contact.email && <span>{contact.email}</span>}
           {contact.phone && <span>{contact.phone}</span>}
+          <SocialIcons links={contact.social} className="social-light" />
         </div>
       </div>
       <div className="footer-bar">

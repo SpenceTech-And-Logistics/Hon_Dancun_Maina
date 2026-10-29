@@ -315,3 +315,11 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-w
 .list-row { transition: background 0.4s, box-shadow 0.4s; }
 .list-row.is-featured { box-shadow: inset 3px 0 0 var(--cherry); background: rgba(168, 50, 42, 0.04); }
 .now-showing { color: var(--cherry); font-weight: 700; }
+
+/* Social icons (Contact page and footer) */
+.social { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.social a { width: 42px; height: 42px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 1.5px solid var(--forest); color: var(--forest); transition: transform 0.25s var(--ease), background 0.25s, color 0.25s, border-color 0.25s; }
+.social a:hover, .social a:focus-visible { transform: translateY(-3px); background: var(--forest); color: #fff; }
+.social-light { margin-top: 12px; }
+.social-light a { border-color: rgba(255, 255, 255, 0.35); color: #fff; width: 38px; height: 38px; }
+.social-light a:hover, .social-light a:focus-visible { background: #fff; color: var(--forest); border-color: #fff; }
