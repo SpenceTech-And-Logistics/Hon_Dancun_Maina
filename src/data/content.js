@@ -97,6 +97,28 @@ export const defaults = {
   // Projects: NG-CDF Nyeri Town allocations for 2022/23 (nyeri-town.ngcdf.go.ke) and press reports.
   projects: [
     {
+      "id": "kerra-roads-2025-26",
+      "title": "Maintenance of 13 constituency roads (2025/26)",
+      "category": "Roads and water",
+      "year": "2025/26",
+      "ward": "",
+      "amount": 0,
+      "description": "Routine maintenance and spot improvement of 13 roads in Nyeri Town Constituency by the Kenya Rural Roads Authority (KeRRA), funded by the Road Maintenance Levy Fund and tendered in October 2025: Kiamwathi S.C.–Chorongi Factory; Nyeri Giatiti–Gitamo–Kihatha; Kagunduini–Tetu; Thuta–Thunguma S.C.; Kwa Munyiri–Gamerock–Chania; Farmview–Mutathiini; Nyeri E.K. Yard–Autospill–K.I.E.; Classic–Old Ruring'u Road–Kanjurus; Kihuyo PCEA–Nyamiro; Nyeri AIPCEA–Nyaribo Primary; Kwa Rwamba road; Ihururu–Nyeri (C504); Gatitu–Kagumo TTC (C515). Several tenders were reserved for youth, women and people with disabilities.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "kerra-roads-2024-25",
+      "title": "Maintenance of 15 constituency roads (2024/25)",
+      "category": "Roads and water",
+      "year": "2024/25",
+      "ward": "",
+      "amount": 0,
+      "description": "Routine maintenance and spot improvement of 15 roads in Nyeri Town Constituency by the Kenya Rural Roads Authority (KeRRA), funded by the Road Maintenance Levy Fund and tendered in November 2024: Gwa Kibaara–Kinunga; Giakanja Catholic Church–Chorongi; Githiri Primary–Githiru Forest; Junction–Gitathiini Primary School; Jesus Winner Church–Kiria Farmview; Kwa Jolly–Ngangarithi Secondary; Hillfarm Primary–Benedict Primary; Kirichu KPLC Station–Makarios/C.S. Rosa Academy; Stut Garden–Quarry–Kagayu; Jumeiya roads; Kagunduini–Nyeri Town (C502); Gatitu–Kagumo TTC (C515); Mt Kenya–Mumbi roads; Kiganjo S.C. loop road; Kwa Jolly–Ngangarithi Primary. Several tenders were reserved for youth, women and people with disabilities.",
+      "photos": [],
+      "status": "published"
+    },
+    {
       "id": "thunguma-ablution",
       "title": "Ablution block at Thunguma Primary School",
       "category": "Education",
@@ -396,6 +418,17 @@ export const defaults = {
     }
   ],
   press: [
+    {
+      "id": "nyeri-roads-sh45bn",
+      "title": "Sh45 billion plan to tarmac 775 km of roads in Nyeri County",
+      "outlet": "The Star",
+      "date": "2026-10-12",
+      "url": "https://www.the-star.co.ke/in-pictures/2026-10-12-kindiki-announces-sh45bn-road-projects-for-nyeri",
+      "image": "",
+      "category": "Events",
+      "summary": "Hon. Mathenge joined Deputy President Kithure Kindiki in Nyeri as the government announced plans to tarmac 775 km of roads across the county at an estimated Sh45 billion.",
+      "status": "published"
+    },
     {
       "id": "nyamachaki-handover",
       "title": "Joy as Nyeri Town MP hands over JSS classrooms at Nyamachaki Primary School",
