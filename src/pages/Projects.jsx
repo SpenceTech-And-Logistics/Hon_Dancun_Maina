@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import Empty from '../components/Empty.jsx'
 import PageHead from '../components/PageHead.jsx'
 import { Reveal } from '../components/Reveal.jsx'
-import { money } from '../lib/media.js'
 import { useContent } from '../lib/useContent.js'
 
 export default function Projects() {
@@ -42,7 +41,7 @@ export default function Projects() {
                       <span className="tag">{p.category}</span>
                       <h3>{p.title}</h3>
                       {p.description && <p>{p.description.length > 120 ? `${p.description.slice(0, 117)}…` : p.description}</p>}
-                      <span className="meta">{[p.ward, p.year, money(p.amount)].filter(Boolean).join(' · ')}</span>
+                      <span className="meta">{[p.ward, p.year].filter(Boolean).join(' · ')}</span>
                     </div>
                   </Link>
                 </Reveal>
