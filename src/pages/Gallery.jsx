@@ -14,6 +14,9 @@ export default function Gallery() {
   // Standalone items + project photos + press images, all in one place.
   const all = useMemo(() => {
     const own = gallery.map((g) => {
+      if (g.type === 'upload') {
+        return { id: g.id, kind: 'video', title: g.title, category: 'Videos', thumb: g.file?.thumb || '', video: g.file?.url, poster: g.file?.thumb || '' }
+      }
       if (g.type === 'video') {
         const v = videoInfo(g.url)
         return { id: g.id, kind: 'video', title: g.title, category: 'Videos', thumb: g.thumb || v.thumb, embed: v.embed, url: g.url }
@@ -24,12 +27,12 @@ export default function Gallery() {
       (p.photos || []).map((src, i) => ({ id: `${p.id}-${i}`, kind: 'photo', title: p.title, category: 'Projects', src, thumb: src })),
     )
     const fromPress = press.filter((n) => n.image).map((n) => ({ id: `press-${n.id}`, kind: 'photo', title: n.title, category: 'Press', src: n.image, thumb: n.image }))
-    return [...own, ...fromProjects, ...fromPress].filter((i) => i.thumb || i.kind === 'video')
+    return [...own, ...fromProjects, ...fromPress].filter((i) => i.thumb || (i.kind === 'video' && (i.url || i.video)))
   }, [gallery, projects, press])
 
   const cats = ['All', ...new Set(all.map((i) => i.category).filter(Boolean))]
   const shown = cat === 'All' ? all : all.filter((i) => i.category === cat)
-  const viewable = shown.filter((i) => i.kind === 'photo' || i.embed)
+  const viewable = shown.filter((i) => i.kind === 'photo' || i.embed || i.video)
   const move = useCallback((d) => setOpen((i) => (i < 0 ? i : (i + d + viewable.length) % viewable.length)), [viewable.length])
   const close = useCallback(() => setOpen(-1), [])
 
@@ -64,7 +67,7 @@ export default function Gallery() {
                 )
               })}
             </div>
-            <p className="note">Photos open in a larger viewer. Pictures from projects and press link back to them.</p>
+            <p className="note">Photos and videos open in a larger viewer. Pictures from projects and press link back to them.</p>
           </>
         )}
       </section>

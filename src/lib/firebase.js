@@ -25,3 +25,14 @@ export async function getAuthKit() {
   const auth = fa.getAuth(await getApp())
   return { fa, auth }
 }
+
+/** True when a Storage bucket is set in site.config.js (needed only for video uploads). */
+export const storageReady = firebaseReady && Boolean(siteConfig.firebase.storageBucket)
+
+/** Firebase Storage, loaded only when a video is uploaded or removed. */
+export async function getStorageKit() {
+  if (!storageReady) return null
+  const st = await import('firebase/storage')
+  const storage = st.getStorage(await getApp())
+  return { st, storage }
+}

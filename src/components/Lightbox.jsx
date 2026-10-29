@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 
 export default function Lightbox({ items, index, onClose, onMove }) {
   const closeRef = useRef(null)
@@ -20,7 +21,8 @@ export default function Lightbox({ items, index, onClose, onMove }) {
   }, [onClose, onMove])
 
   if (!item) return null
-  return (
+  // Rendered on <body> so page animations (transforms) can't trap the fixed overlay.
+  return createPortal(
     <div className="lightbox" role="dialog" aria-modal="true" aria-label={item.title || 'Gallery viewer'} onClick={onClose}>
       <button ref={closeRef} type="button" className="lb-close" onClick={onClose} aria-label="Close viewer">
         ×
@@ -32,13 +34,16 @@ export default function Lightbox({ items, index, onClose, onMove }) {
         </>
       )}
       <figure className="lb-body" onClick={(e) => e.stopPropagation()}>
-        {item.embed ? (
+        {item.video ? (
+          <video key={item.video} src={item.video} poster={item.poster || undefined} controls autoPlay playsInline preload="metadata" />
+        ) : item.embed ? (
           <iframe src={item.embed} title={item.title || 'Video'} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />
         ) : (
           <img src={item.src} alt={item.title || 'Gallery photo'} />
         )}
         {(item.title || item.caption) && <figcaption>{item.title}{item.caption ? ` · ${item.caption}` : ''}</figcaption>}
       </figure>
-    </div>
+    </div>,
+    document.body,
   )
 }

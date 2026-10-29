@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Firebase Storage: holds the videos uploaded from the dashboard's Gallery.
+// Anyone can watch them; only site admins (admins/{UID} with ok = true in Firestore) can upload or delete.
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /videos/{name} {
+      allow read: if true;
+      allow delete: if isAdmin();
+      allow create, update: if isAdmin()
+        && request.resource.size < 200 * 1024 * 1024
+        && request.resource.contentType.matches('video/.*');
+    }
+
+    function isAdmin() {
+      return request.auth != null
+        && firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid))
+        && firestore.get(/databases/(default)/documents/admins/$(request.auth.uid)).data.ok == true;
+    }
+  }
+}

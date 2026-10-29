@@ -8,7 +8,7 @@ import { Field } from './Fields.jsx'
  * A list of records (projects, news, gallery) with add, edit, delete and optional import from CSV or JSON.
  * Props: coll, title, blurb, noun, fields, columns, empty, importer?: { columns, example, map }
  */
-export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer }) {
+export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer, validate, onDelete }) {
   const { refresh } = useContent()
   const [items, setItems] = useState(null)
   const [editing, setEditing] = useState(null) // null | 'new' | id
@@ -61,6 +61,8 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
     try {
       const { fs, db } = await getDb()
       const { createdAt, ...data } = form
+      const problem = validate?.(data)
+      if (problem) throw new Error(problem)
       if (JSON.stringify(data).length > 950000) throw new Error('Too large to save. Remove a photo or two, or use smaller photos.')
       if (editing === 'new') await fs.addDoc(fs.collection(db, coll), { ...data, createdAt: fs.serverTimestamp() })
       else await fs.setDoc(fs.doc(db, coll, editing), { ...data, ...(createdAt ? { createdAt } : {}) })
@@ -76,7 +78,9 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
   async function remove(id) {
     try {
       const { fs, db } = await getDb()
+      const item = (items || []).find((i) => i.id === id)
       await fs.deleteDoc(fs.doc(db, coll, id))
+      if (item && onDelete) await onDelete(item)
       setConfirm('')
       await reload()
     } catch (ex) {

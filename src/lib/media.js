@@ -40,3 +40,38 @@ export const formatDate = (d) => {
 }
 
 export const money = (n) => (n ? `KES ${Number(n).toLocaleString('en-KE')}` : '')
+
+export const MAX_VIDEO_MB = 200
+
+/** Grab a frame about a second in and return it as a small JPEG data URL, for the gallery thumbnail. */
+export function videoPoster(file, maxSide = 900) {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file)
+    const v = document.createElement('video')
+    const done = (val) => {
+      URL.revokeObjectURL(url)
+      resolve(val)
+    }
+    v.muted = true
+    v.playsInline = true
+    v.preload = 'auto'
+    v.onloadedmetadata = () => {
+      v.currentTime = Math.min(1, (v.duration || 2) / 2)
+    }
+    v.onseeked = () => {
+      try {
+        const scale = Math.min(1, maxSide / Math.max(v.videoWidth, v.videoHeight))
+        const c = document.createElement('canvas')
+        c.width = Math.round(v.videoWidth * scale)
+        c.height = Math.round(v.videoHeight * scale)
+        c.getContext('2d').drawImage(v, 0, 0, c.width, c.height)
+        done(c.toDataURL('image/jpeg', 0.72))
+      } catch {
+        done('')
+      }
+    }
+    v.onerror = () => done('')
+    setTimeout(() => done(''), 15000)
+    v.src = url
+  })
+}

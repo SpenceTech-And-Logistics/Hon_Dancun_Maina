@@ -70,3 +70,11 @@
 .adm-signin .adm-btn { padding: 15px 24px; font-size: 16px; }
 .adm-signin .adm-link { align-self: flex-start; }
 .adm-uid { display: block; background: #efe9da; padding: 12px; border-radius: 8px; word-break: break-all; user-select: all; }
+
+.adm-drop-wide { width: 100%; max-width: 360px; height: auto; padding: 28px 16px; }
+.adm-video { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+.adm-video video { width: 100%; max-width: 360px; border-radius: 8px; background: #000; }
+.adm-video > div { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.adm-progress { position: relative; max-width: 420px; height: 40px; border-radius: 8px; background: #efe9da; overflow: hidden; }
+.adm-progress i { position: absolute; inset: 0 auto 0 0; background: #cfe0c8; transition: width 0.3s; }
+.adm-progress span { position: relative; display: flex; align-items: center; height: 100%; padding: 0 14px; font-size: 14px; font-weight: 600; color: #1c4733; }
