@@ -15,7 +15,6 @@ function merge(base, over) {
 // Photos dropped into src/assets/projects and src/assets/news are matched to items by file name:
 //   projects: <project-id>.jpg, <project-id>-2.jpg, <project-id>-3.jpg …   news: <story-id>.jpg
 // See the README.md in each folder for the list of IDs.
-const opts = { eager: true, query: '?url', import: 'default' }
 const toMap = (files) => {
   const map = {}
   for (const [path, url] of Object.entries(files).sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))) {
@@ -24,8 +23,8 @@ const toMap = (files) => {
   }
   return map
 }
-const projectFiles = toMap(import.meta.glob('../assets/projects/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', opts))
-const newsFiles = toMap(import.meta.glob('../assets/news/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', opts))
+const projectFiles = toMap(import.meta.glob('../assets/projects/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true, query: '?url', import: 'default' }))
+const newsFiles = toMap(import.meta.glob('../assets/news/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', { eager: true, query: '?url', import: 'default' }))
 const baseId = (id = '') => String(id).replace(/^seed-/, '').toLowerCase()
 const withProjectPhotos = (p) => {
   const extra = projectFiles[baseId(p.id)]
