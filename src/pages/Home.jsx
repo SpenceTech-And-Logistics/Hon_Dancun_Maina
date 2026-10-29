@@ -20,7 +20,6 @@ export default function Home() {
     <>
       <section className="wrap hero">
         <div>
-          <span className="eyebrow rise" style={{ '--d': '0ms' }}>{profile.title || 'Member of Parliament for Nyeri Town'}</span>
           <h1 className="rise" style={{ '--d': '100ms' }}>
             Hon. Duncan <em>Maina</em> Mathenge
           </h1>
