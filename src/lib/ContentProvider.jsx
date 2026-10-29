@@ -12,6 +12,27 @@ function merge(base, over) {
   return out
 }
 
+// Photos dropped into src/assets/projects and src/assets/news are matched to items by file name:
+//   projects: <project-id>.jpg, <project-id>-2.jpg, <project-id>-3.jpg …   news: <story-id>.jpg
+// See the README.md in each folder for the list of IDs.
+const opts = { eager: true, query: '?url', import: 'default' }
+const toMap = (files) => {
+  const map = {}
+  for (const [path, url] of Object.entries(files).sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))) {
+    const key = path.split('/').pop().replace(/\.[^.]+$/, '').replace(/-\d+$/, '').toLowerCase()
+    ;(map[key] ||= []).push(url)
+  }
+  return map
+}
+const projectFiles = toMap(import.meta.glob('../assets/projects/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', opts))
+const newsFiles = toMap(import.meta.glob('../assets/news/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}', opts))
+const baseId = (id = '') => String(id).replace(/^seed-/, '').toLowerCase()
+const withProjectPhotos = (p) => {
+  const extra = projectFiles[baseId(p.id)]
+  return extra ? { ...p, photos: [...new Set([...(p.photos || []), ...extra])] } : p
+}
+const withNewsImage = (n) => (n.image ? n : { ...n, image: newsFiles[baseId(n.id)]?.[0] || '' })
+
 const byDateDesc = (a, b) => String(b.date || b.year || '').localeCompare(String(a.date || a.year || ''))
 
 export function ContentProvider({ children }) {
@@ -44,8 +65,8 @@ export function ContentProvider({ children }) {
   const value = useMemo(() => {
     const r = remote
     const published = (items) => items.filter((i) => i.status !== 'draft')
-    const projects = r && r.projects.length ? published(r.projects).sort(byDateDesc) : [...defaults.projects].sort(byDateDesc)
-    const press = r && r.press.length ? published(r.press).sort(byDateDesc) : [...defaults.press].sort(byDateDesc)
+    const projects = (r && r.projects.length ? published(r.projects) : [...defaults.projects]).sort(byDateDesc).map(withProjectPhotos)
+    const press = (r && r.press.length ? published(r.press) : [...defaults.press]).sort(byDateDesc).map(withNewsImage)
     const gallery = r && r.gallery.length ? published(r.gallery) : defaults.gallery
     return {
       profile: merge(defaults.profile, r?.docs.profile),
