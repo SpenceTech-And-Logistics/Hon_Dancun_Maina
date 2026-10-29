@@ -97,6 +97,105 @@ export const defaults = {
   // Projects: NG-CDF Nyeri Town allocations for 2022/23 (nyeri-town.ngcdf.go.ke) and press reports.
   projects: [
     {
+      "id": "thunguma-ablution",
+      "title": "Ablution block at Thunguma Primary School",
+      "category": "Education",
+      "year": "2023/24",
+      "ward": "",
+      "amount": 0,
+      "description": "A new ablution block for the school's learners. Completed under NG-CDF Nyeri Town, financial year 2023/24.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "moi-complex-classrooms",
+      "title": "Two classrooms at Moi Complex Primary School",
+      "category": "Education",
+      "year": "2023/24",
+      "ward": "",
+      "amount": 0,
+      "description": "Two new classrooms. Completed under NG-CDF Nyeri Town, financial year 2023/24.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "muthuaini-ablution",
+      "title": "Ablution block at Muthua-ini Primary School",
+      "category": "Education",
+      "year": "2023/24",
+      "ward": "",
+      "amount": 0,
+      "description": "A new ablution block for the school's learners. Completed under NG-CDF Nyeri Town, financial year 2023/24.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "giakanja-classroom",
+      "title": "New classroom at Giakanja Primary School",
+      "category": "Education",
+      "year": "2023/24",
+      "ward": "",
+      "amount": 0,
+      "description": "A new classroom. Completed under NG-CDF Nyeri Town, financial year 2023/24.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "tetu-boys-ablution",
+      "title": "Ablution block at Tetu Boys Primary School",
+      "category": "Education",
+      "year": "2023/24",
+      "ward": "",
+      "amount": 0,
+      "description": "A new ablution block for the school's learners. Completed under NG-CDF Nyeri Town, financial year 2023/24.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "kihuyo-lab",
+      "title": "Modern science laboratory at Kihuyo Primary and Junior School",
+      "category": "Education",
+      "year": "2024/25",
+      "ward": "",
+      "amount": 0,
+      "description": "A modern science laboratory for Junior Secondary learners. Completed under NG-CDF Nyeri Town, financial year 2024/25.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "kamuyu-lab",
+      "title": "Modern laboratory at Kamuyu Primary School",
+      "category": "Education",
+      "year": "2024/25 and 2025/26",
+      "ward": "",
+      "amount": 0,
+      "description": "A modern laboratory for Junior Secondary learners, funded over two financial years. Completed under NG-CDF Nyeri Town, financial year 2024/25 and 2025/26.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "kahiga-dining-furniture",
+      "title": "Dining hall furniture for Kahiga Secondary School",
+      "category": "Education",
+      "year": "2024/25",
+      "ward": "",
+      "amount": 0,
+      "description": "Supply of furniture for the school's dining hall. Completed under NG-CDF Nyeri Town, financial year 2024/25.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "chorongi-chiefs-office",
+      "title": "Chorongi Assistant Chief's office",
+      "category": "Other",
+      "year": "2024/25",
+      "ward": "",
+      "amount": 0,
+      "description": "A new office for the Chorongi Assistant Chief. Completed under NG-CDF Nyeri Town, financial year 2024/25.",
+      "photos": [],
+      "status": "published"
+    },
+    {
       "id": "mathari-lab",
       "title": "Science laboratory at Mathari Primary School",
       "category": "Education",
@@ -180,7 +279,7 @@ export const defaults = {
       "year": "2022/23",
       "ward": "",
       "amount": 6000000,
-      "description": "Continued work on the administration block, with furniture. Allocated under the NG-CDF budget for 2022/23 (Nyeri Town Constituency).",
+      "description": "Administration block with furniture, funded under NG-CDF Nyeri Town in 2022/23 and completed in 2023/24.",
       "photos": [],
       "status": "published"
     },
@@ -191,7 +290,7 @@ export const defaults = {
       "year": "2022/23",
       "ward": "",
       "amount": 6000000,
-      "description": "Continued work on the block. Allocated under the NG-CDF budget for 2022/23 (Nyeri Town Constituency).",
+      "description": "A two-storey administration block, funded under NG-CDF Nyeri Town in 2022/23 and completed in 2023/24.",
       "photos": [],
       "status": "published"
     },

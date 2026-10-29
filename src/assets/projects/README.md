@@ -8,8 +8,21 @@ Drop photos in this folder, named after the project's ID. They show on the proje
 
 Then `npm run build` and deploy. Photos uploaded in the dashboard still work, and both are shown together.
 
+## Quick start
+
+`bash scripts/get-project-photos.sh` downloads the 11 photos the NG-CDF office has published and saves them here with the right names.
+
 | File name starts with | Project |
 |---|---|
+| `thunguma-ablution` | Ablution block at Thunguma Primary School |
+| `moi-complex-classrooms` | Two classrooms at Moi Complex Primary School |
+| `muthuaini-ablution` | Ablution block at Muthua-ini Primary School |
+| `giakanja-classroom` | New classroom at Giakanja Primary School |
+| `tetu-boys-ablution` | Ablution block at Tetu Boys Primary School |
+| `kihuyo-lab` | Modern science laboratory at Kihuyo Primary and Junior School |
+| `kamuyu-lab` | Modern laboratory at Kamuyu Primary School |
+| `kahiga-dining-furniture` | Dining hall furniture for Kahiga Secondary School |
+| `chorongi-chiefs-office` | Chorongi Assistant Chief's office |
 | `mathari-lab` | Science laboratory at Mathari Primary School |
 | `githwariga-lab` | Science laboratory at Githwariga Primary School |
 | `jss-lab-conversions` | Laboratories at Chorongi, Kiamuiru and Tetu Boys primary schools |
@@ -28,3 +41,17 @@ Then `npm run build` and deploy. Photos uploaded in the dashboard still work, an
 | `sports-tournaments` | Constituency and regional sports tournaments |
 | `nyamachaki-jss` | Eight Junior Secondary classrooms at Nyamachaki Primary and JSS |
 | `giakanja-computers` | 20 computers for Giakanja Boys High School |
+
+## NG-CDF project pages (photo sources)
+
+- `thunguma-ablution`: [Ablution block at Thunguma Primary School](https://nyeri-town.ngcdf.go.ke/project/thunguma-primary-school-ablution-block/)
+- `moi-complex-classrooms`: [Two classrooms at Moi Complex Primary School](https://nyeri-town.ngcdf.go.ke/project/moi-complex-primary-school-two-classrooms/)
+- `muthuaini-ablution`: [Ablution block at Muthua-ini Primary School](https://nyeri-town.ngcdf.go.ke/project/muthua-ini-primary-school-ablution-block/)
+- `giakanja-classroom`: [New classroom at Giakanja Primary School](https://nyeri-town.ngcdf.go.ke/project/giakanja-primary-school-classroom/)
+- `tetu-boys-ablution`: [Ablution block at Tetu Boys Primary School](https://nyeri-town.ngcdf.go.ke/project/tetu-boys-primary-school-ablution-block/)
+- `kihuyo-lab`: [Modern science laboratory at Kihuyo Primary and Junior School](https://nyeri-town.ngcdf.go.ke/project/kihuyo-primary-junior-school-mordern-science-lab/)
+- `kamuyu-lab`: [Modern laboratory at Kamuyu Primary School](https://nyeri-town.ngcdf.go.ke/project/kamuyu-primary-school-mordern-laboratory/)
+- `kahiga-dining-furniture`: [Dining hall furniture for Kahiga Secondary School](https://nyeri-town.ngcdf.go.ke/project/kahiga-secondary-school-supply-of-dining-hall-furnitures/)
+- `chorongi-chiefs-office`: [Chorongi Assistant Chief's office](https://nyeri-town.ngcdf.go.ke/project/chorongi-assistant-chiefs-office/)
+- `rware-admin`: [Administration block at Rware High School](https://nyeri-town.ngcdf.go.ke/project/rware-hich-school-admin-block/)
+- `gitathiini-admin`: [Two-storey administration block at Gitathiini Secondary School](https://nyeri-town.ngcdf.go.ke/project/githathini-secondary-school-admin-block/)
