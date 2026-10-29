@@ -14,7 +14,7 @@ export const defaults = {
     elected: 'August 2022',
     parliament: '13th Parliament of Kenya',
     intro:
-      'Member of Parliament for Nyeri Town and Vice-Chairperson of the National Cohesion and Equal Opportunity Committee, serving in the 13th Parliament with a record in health, coffee and tea, and public investments. Before Parliament he was a certified dental technologist and health systems manager.',
+      "Hon. Duncan Maina Mathenge is a Kenyan legislator, healthcare professional and public administrator serving as the Member of Parliament for Nyeri Town Constituency since August 2022. His professional background spans healthcare systems, county administration and public policy, with experience in institutional governance, legislative oversight and community representation. Before joining the National Assembly, he served as Chief of Staff and Political Advisor to the County Government of Nyeri between 2013 and 2015.",
     bio: [
       'Hon. Duncan Maina Mathenge is the Member of Parliament for Nyeri Town in Nyeri County. He was elected on a United Democratic Alliance (UDA) ticket in August 2022 and serves in the 13th Parliament of Kenya.',
       'Before Parliament he worked as a certified dental technologist and as a consultant with Bredent Dental Implant Systems, and served as Chief of Staff and Political Advisor to the County Government of Nyeri. He holds a BSc in Health Systems Management from Kenya Methodist University.',
