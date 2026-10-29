@@ -39,16 +39,3 @@ npx wrangler deploy
 ## Filling a new database
 
 After Firebase is connected and your account is in `admins`, open `/admin/starter` (“Fill the database” in the dashboard menu) and press the button. It writes the profile, career, education, Parliament record, contact details and news into Firestore. Items already in the database are kept unless you tick “Replace”, so it is safe to press again.
-
-## Uploading videos
-
-The Gallery accepts video files as well as video links (Dashboard → Gallery → Add item → Type: **Video file (upload)**). Videos are stored in Firebase Storage, because the database only holds small records.
-
-One-time setup in the Firebase console:
-
-1. **Build → Storage → Get started.** Firebase asks for the Blaze (pay-as-you-go) plan to create the bucket. It includes a free monthly allowance, so a handful of short videos usually costs nothing, but a card must be on file. Setting a budget alert under Billing is a good idea.
-2. Choose a location (us-central1, us-east1 or us-west1 keep you inside the free allowance) and finish.
-3. **Storage → Rules:** paste the contents of `storage.rules` and **Publish**. Firebase asks to let Storage read Firestore (to check `admins`); allow it.
-4. The bucket name must match `storageBucket` in `site.config.js` (it already does if you pasted the full config from the console).
-
-Tips: MP4 (H.264) plays everywhere. Keep files under 200 MB; exporting at 720p keeps them small. Deleting a video item in the dashboard also deletes the file from Storage.

@@ -1,4 +1,3 @@
-import { getStorageKit } from '../../lib/firebase.js'
 import { CATEGORIES, GALLERY_CATEGORIES, NEWS_CATEGORIES, defaults } from '../../data/content.js'
 
 const status = { key: 'status', label: 'Status', type: 'select', options: [{ value: 'published', label: 'Published' }, { value: 'draft', label: 'Draft (hidden)' }] }
@@ -122,26 +121,19 @@ export const pressConfig = {
 export const galleryConfig = {
   coll: 'gallery',
   title: 'Gallery',
-  blurb: 'Standalone photos and videos (upload a file or paste a link). Project photos and news photos appear here automatically.',
-  validate: (f) => (f.type === 'upload' && !f.file?.url ? 'Upload the video file first, then save.' : ''),
-  onDelete: async (it) => {
-    if (it.type !== 'upload' || !it.file?.path) return
-    const kit = await getStorageKit()
-    if (kit) await kit.st.deleteObject(kit.st.ref(kit.storage, it.file.path)).catch(() => {})
-  },
+  blurb: 'Standalone photos and videos. Project photos and news photos appear here automatically.',
   noun: 'Item',
-  empty: { type: 'photo', title: '', category: GALLERY_CATEGORIES[0], src: '', url: '', file: null, status: 'published' },
+  empty: { type: 'photo', title: '', category: GALLERY_CATEGORIES[0], src: '', url: '', status: 'published' },
   fields: [
-    { key: 'type', label: 'Type', type: 'select', options: [{ value: 'photo', label: 'Photo' }, { value: 'upload', label: 'Video file (upload)' }, { value: 'video', label: 'Video link' }] },
+    { key: 'type', label: 'Type', type: 'select', options: [{ value: 'photo', label: 'Photo' }, { value: 'video', label: 'Video link' }] },
     { key: 'title', label: 'Caption' },
-    { key: 'category', label: 'Category', type: 'select', options: GALLERY_CATEGORIES, showIf: (f) => f.type !== 'video' && f.type !== 'upload' },
-    { key: 'src', label: 'Photo', type: 'image', wide: true, showIf: (f) => f.type !== 'video' && f.type !== 'upload' },
-    { key: 'file', label: 'Video file', type: 'video', wide: true, showIf: (f) => f.type === 'upload' },
+    { key: 'category', label: 'Category', type: 'select', options: GALLERY_CATEGORIES, showIf: (f) => f.type !== 'video' },
+    { key: 'src', label: 'Photo', type: 'image', wide: true, showIf: (f) => f.type !== 'video' },
     { key: 'url', label: 'Video link', type: 'url', wide: true, hint: 'YouTube, Google Drive, Facebook or TikTok. YouTube thumbnails are automatic.', showIf: (f) => f.type === 'video' },
     status,
   ],
   columns: [
-    { key: 'type', label: 'Type', render: (it) => ({ video: 'Video link', upload: 'Video file' })[it.type] || 'Photo' },
+    { key: 'type', label: 'Type', render: (it) => (it.type === 'video' ? 'Video' : 'Photo') },
     { key: 'title', label: 'Caption' },
     { key: 'category', label: 'Category' },
     { key: 'status', label: 'Status', render: badge },

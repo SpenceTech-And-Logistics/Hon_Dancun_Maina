@@ -34,9 +34,7 @@ export default function Lightbox({ items, index, onClose, onMove }) {
         </>
       )}
       <figure className="lb-body" onClick={(e) => e.stopPropagation()}>
-        {item.video ? (
-          <video key={item.video} src={item.video} poster={item.poster || undefined} controls autoPlay playsInline preload="metadata" />
-        ) : item.embed ? (
+        {item.embed ? (
           <iframe src={item.embed} title={item.title || 'Video'} allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />
         ) : (
           <img src={item.src} alt={item.title || 'Gallery photo'} />
