@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { defaults } from '../data/content.js'
 import { getDb } from './firebase.js'
+import { dropRetired } from './retired.js'
 import { ContentContext } from './useContent.js'
 
 const nonEmpty = (v) => (Array.isArray(v) ? v.length > 0 : v !== undefined && v !== null && v !== '')
@@ -68,7 +69,7 @@ export function ContentProvider({ children }) {
     const press = (r && r.press.length ? published(r.press) : [...defaults.press]).sort(byDateDesc).map(withNewsImage)
     const gallery = r && r.gallery.length ? published(r.gallery) : defaults.gallery
     return {
-      profile: merge(defaults.profile, r?.docs.profile),
+      profile: merge(defaults.profile, dropRetired(r?.docs.profile)),
       parliament: merge(defaults.parliament, r?.docs.parliament),
       contact: merge(defaults.contact, r?.docs.contact),
       projects,

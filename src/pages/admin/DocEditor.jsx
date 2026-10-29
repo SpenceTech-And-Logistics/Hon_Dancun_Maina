@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getDb } from '../../lib/firebase.js'
+import { dropRetired } from '../../lib/retired.js'
 import { useContent } from '../../lib/useContent.js'
 import { Field } from './Fields.jsx'
 
@@ -17,7 +18,7 @@ export default function DocEditor({ docId, title, blurb, fields, defaults }) {
       let saved = {}
       try {
         const snap = await fs.getDoc(fs.doc(db, 'site', docId))
-        if (snap.exists()) saved = snap.data()
+        if (snap.exists()) saved = dropRetired(snap.data())
       } catch (e) {
         if (alive) setMsg({ bad: true, text: `Could not load: ${e.message}` })
       }
