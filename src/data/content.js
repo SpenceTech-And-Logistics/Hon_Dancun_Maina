@@ -21,6 +21,8 @@ export const defaults = {
     ],
     vision: '',
     photo: '',
+    homePhoto2: '',
+    aboutPhoto: '',
     interests: ['Health services', 'Public accounts', 'Sports', 'Agriculture', 'Coffee and tea', 'National cohesion'],
     focus: [
       {

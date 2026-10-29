@@ -2,14 +2,26 @@ import { useRef } from 'react'
 import { useScroll } from '../lib/hooks.js'
 import { useContent } from '../lib/useContent.js'
 
-// Drop a file called portrait.jpg (or .png / .webp) into src/assets/images and it is used automatically.
-const files = import.meta.glob('../assets/images/portrait.*', { eager: true, query: '?url', import: 'default' })
-const bundled = Object.values(files)[0] || ''
+// Each spot has its own photo, so the home page and the About page do not repeat the same picture.
+// Upload them in the dashboard (Profile and career), or drop files into src/assets/images:
+//   portrait.jpg   home page, top        (dashboard: "Portrait photo")
+//   home-about.jpg home page, About strip (dashboard: "Home page, second photo")
+//   about.jpg      About page            (dashboard: "About page photo")
+// .png and .webp work too. An empty spot falls back to the main portrait.
+const files = import.meta.glob('../assets/images/{portrait,home-about,about}.*', { eager: true, query: '?url', import: 'default' })
+const bundled = (name) => Object.entries(files).find(([k]) => k.split('/').pop().split('.')[0] === name)?.[1] || ''
 
-export default function Portrait({ className = '', parallax = true, eager = false }) {
+const SLOTS = {
+  hero: ['photo', 'portrait'],
+  homeAbout: ['homePhoto2', 'home-about'],
+  about: ['aboutPhoto', 'about'],
+}
+
+export default function Portrait({ className = '', parallax = true, eager = false, slot = 'hero' }) {
   const { profile } = useContent()
   const ref = useRef(null)
-  const src = profile.photo || bundled
+  const [field, file] = SLOTS[slot] || SLOTS.hero
+  const src = profile[field] || bundled(file) || profile.photo || bundled('portrait')
 
   useScroll((y) => {
     if (!parallax || !ref.current) return

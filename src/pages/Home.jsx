@@ -74,7 +74,7 @@ export default function Home() {
 
       <section className="wrap section-tight">
         <div className="split">
-          <Reveal variant="left"><Portrait parallax={false} /></Reveal>
+          <Reveal variant="left"><Portrait parallax={false} slot="homeAbout" /></Reveal>
           <Reveal variant="right" className="prose">
             <span className="eyebrow">About</span>
             <h2 className="title" style={{ marginBottom: 20 }}>From the dental laboratory to the National Assembly</h2>
