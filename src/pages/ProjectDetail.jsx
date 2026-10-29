@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Lightbox from '../components/Lightbox.jsx'
 import { Reveal } from '../components/Reveal.jsx'
-import { money } from '../lib/media.js'
 import { useContent } from '../lib/useContent.js'
 import NotFound from './NotFound.jsx'
 
@@ -20,7 +19,6 @@ export default function ProjectDetail() {
     ['Category', project.category],
     ['Year', project.year],
     ['Ward', project.ward],
-    ['Amount', money(project.amount)],
   ].filter(([, v]) => v)
 
   return (
