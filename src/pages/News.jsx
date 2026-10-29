@@ -10,8 +10,7 @@ export default function News() {
   const [cat, setCat] = useState('All')
   const cats = ['All', ...new Set(press.map((n) => n.category).filter(Boolean))]
   const shown = cat === 'All' ? press : press.filter((n) => n.category === cat)
-  const top = shown.slice(0, 5)
-  const rest = shown.slice(5)
+  const [active, setActive] = useState(0)
   const meta = (n) => [n.outlet, formatDate(n.date)].filter(Boolean).join(' · ')
 
   return (
@@ -23,14 +22,14 @@ export default function News() {
             {cats.map((c) => <button key={c} type="button" className="chip" aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>)}
           </div>
         )}
-        <NewsSlider items={top} key={cat} />
-        {rest.length > 0 && (
+        <NewsSlider items={shown} key={cat} onChange={setActive} />
+        {shown.length > 0 && (
           <div className="list" style={{ marginTop: 32 }}>
-            {rest.map((n) => (
-              <Reveal className="list-row" key={n.id}>
+            {shown.map((n, k) => (
+              <Reveal className={`list-row${k === active ? ' is-featured' : ''}`} key={n.id}>
                 {n.image && <img src={n.image} alt="" loading="lazy" style={{ width: 120, height: 80, objectFit: 'cover', borderRadius: 6 }} />}
                 <div style={{ flex: '1 1 340px', minWidth: 0 }}>
-                  <span className="meta">{meta(n)}</span>
+                  <span className="meta">{k === active && <b className="now-showing">Showing above · </b>}{meta(n)}</span>
                   <h3 style={{ fontSize: 22, marginTop: 4 }}>{n.title}</h3>
                 </div>
                 {n.url && <a href={n.url} target="_blank" rel="noreferrer" className="link-arrow">Open <span>→</span></a>}

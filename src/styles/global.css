@@ -311,3 +311,7 @@ label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-w
 @keyframes nslide-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
 @media (max-width: 720px) { .nslide-img { min-height: 200px; } .nslide-nav { left: 24px; right: auto; } }
 @media (prefers-reduced-motion: reduce) { .nslide-item { transition: none; transform: none; } .nslide-item.on .nslide-img img { animation: none; } }
+.nslide-count { font: 600 14px var(--sans, inherit); color: var(--forest); min-width: 48px; text-align: center; }
+.list-row { transition: background 0.4s, box-shadow 0.4s; }
+.list-row.is-featured { box-shadow: inset 3px 0 0 var(--cherry); background: rgba(168, 50, 42, 0.04); }
+.now-showing { color: var(--cherry); font-weight: 700; }

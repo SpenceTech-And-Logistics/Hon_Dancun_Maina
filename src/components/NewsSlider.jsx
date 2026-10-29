@@ -5,7 +5,7 @@ import { formatDate } from '../lib/media.js'
  * Rotating featured stories. Shows one story at a time and moves on every few seconds.
  * Pauses while the pointer or keyboard focus is on it, and stays still for reduced-motion visitors.
  */
-export default function NewsSlider({ items, interval = 6000 }) {
+export default function NewsSlider({ items, interval = 6000, onChange }) {
   const [i, setI] = useState(0)
   const [paused, setPaused] = useState(false)
   const timer = useRef(null)
@@ -19,8 +19,12 @@ export default function NewsSlider({ items, interval = 6000 }) {
     return () => clearTimeout(timer.current)
   }, [i, n, paused, interval])
 
+  const cur = Math.min(i, Math.max(n - 1, 0))
+  useEffect(() => {
+    onChange?.(cur)
+  }, [cur, onChange])
+
   if (!n) return null
-  const cur = Math.min(i, n - 1)
   const meta = (s) => [s.outlet, formatDate(s.date)].filter(Boolean).join(' · ')
 
   return (
@@ -66,6 +70,9 @@ export default function NewsSlider({ items, interval = 6000 }) {
       {n > 1 && (
         <div className="nslide-nav">
           <button type="button" className="nslide-arrow" onClick={() => go(cur - 1)} aria-label="Previous story">←</button>
+          {n > 8 ? (
+            <span className="nslide-count" aria-live="polite">{cur + 1} / {n}</span>
+          ) : (
           <div className="nslide-dots" role="group" aria-label="Choose a story">
             {items.map((s, k) => (
               <button key={s.id || k} type="button" aria-label={`Story ${k + 1}`} aria-current={k === cur} onClick={() => go(k)}>
@@ -73,6 +80,7 @@ export default function NewsSlider({ items, interval = 6000 }) {
               </button>
             ))}
           </div>
+          )}
           <button type="button" className="nslide-arrow" onClick={() => go(cur + 1)} aria-label="Next story">→</button>
         </div>
       )}
