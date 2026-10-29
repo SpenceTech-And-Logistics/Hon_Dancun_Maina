@@ -278,8 +278,9 @@ export const defaults = {
       "category": "Education",
       "year": "2025",
       "ward": "",
-      "amount": 0,
-      "description": "Four Grade 8 and four Grade 9 classrooms handed over for the school's 2,100 learners, funded by a KES 10 million injection from President William Ruto and the World Bank's KPEELP programme. The MP inspected the classes in February 2025.",
+      "amount": 10000000,
+      "description": "Junior Secondary classrooms on a multi-storey block (the school sits on half an acre), handed over by the MP in January 2025 for the school's 2,100 learners. Education News reports KES 10 million through NG-CDF with the National Government; Kenya News Agency credits a KES 10 million injection from President Ruto and the World Bank's KPEELP programme.",
+
       "photos": [],
       "status": "published"
     },
@@ -296,6 +297,17 @@ export const defaults = {
     }
   ],
   press: [
+    {
+      "id": "nyamachaki-handover",
+      "title": "Joy as Nyeri Town MP hands over JSS classrooms at Nyamachaki Primary School",
+      "outlet": "Education News",
+      "date": "2025-01-08",
+      "url": "https://educationnews.co.ke/joy-as-nyeri-town-mp-hands-over-4-jss-classrooms-at-nyamachaki-primary-school/",
+      "image": "",
+      "category": "Events",
+      "summary": "With County Director of Education Jane Njogu, the MP handed over new Junior Secondary classrooms built on a multi-storey block, using local labour, ready for learners moving to Grade 9.",
+      "status": "published"
+    },
     {
       "id": "committee-vice-chair",
       "title": "Hon. Mathenge elected Vice-Chairperson of the National Cohesion and Equal Opportunity Committee",
