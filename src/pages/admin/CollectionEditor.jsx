@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { getDb } from '../../lib/firebase.js'
 import { csvTemplate, readRecords, saveText } from '../../lib/importer.js'
 import { useContent } from '../../lib/useContent.js'
+import { fixCategory } from '../../data/content.js'
 import { Field } from './Fields.jsx'
 
 /**
@@ -46,7 +47,7 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   function startEdit(item) {
-    const { id, ...rest } = item
+    const { id, ...rest } = fixCategory(item)
     void id
     setForm({ ...empty, ...rest })
     setEditing(item.id)
@@ -164,7 +165,7 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
               <tbody>
                 {items.map((it) => (
                   <tr key={it.id}>
-                    {columns.map((c) => <td key={c.key}>{c.render ? c.render(it) : it[c.key]}</td>)}
+                    {columns.map((c) => <td key={c.key}>{c.render ? c.render(it) : fixCategory(it)[c.key]}</td>)}
                     <td className="r">
                       {confirm === it.id ? (
                         <>

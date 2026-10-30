@@ -16,7 +16,7 @@ export default function Projects() {
       <PageHead
         eyebrow="Projects"
         title="Work delivered in Nyeri Town"
-        lead="Health, education, roads and water, coffee and tea, youth and sports: what has been done, where and for whom."
+        lead="Health, education, roads, water, coffee and tea, youth and sports: what has been done, where and for whom."
       />
       <section className="wrap section-tight">
         {projects.length === 0 ? (

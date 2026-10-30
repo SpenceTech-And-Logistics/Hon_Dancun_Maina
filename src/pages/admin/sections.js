@@ -69,7 +69,7 @@ export const projectsConfig = {
     example: ['Dispensary upgrade', 'Health', '2025', 'Kiganjo/Mathari', '1500000', 'New maternity wing and equipment.'],
     map: (r) => ({
       title: String(r.title || '').trim(),
-      category: CATEGORIES.includes(r.category) ? r.category : 'Other',
+      category: CATEGORIES.includes(r.category) ? r.category : r.category === 'Roads and water' ? 'Roads' : 'Other',
       year: String(r.year || ''),
       ward: String(r.ward || ''),
       amount: Number(String(r.amount || '0').replace(/[^\d.]/g, '')) || 0,

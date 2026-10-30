@@ -67,3 +67,4 @@ To do
 
 - **2026-10-30:** SEO set up: per-page HTML, structured data, share image, sitemap and robots generated at build from Firestore or built-in content.
 - **2026-10-30:** Tarmacked roads split into four project pages (Muthuaini–Gatitu, Oil Com–Thunguma, St. Jude, Ngangarithi–Ciaraini), each with its own photo; the old combined page is retired and left out of the sitemap.
+- **2026-10-30:** "Roads and water" split into separate **Roads** and **Water** categories (Roads: 6 projects, Water: 1).

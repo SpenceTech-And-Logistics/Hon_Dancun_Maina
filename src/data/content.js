@@ -1,7 +1,16 @@
 // Built-in content, taken from the Parliament of Kenya, Mzalendo and TrackMinster.
 // The dashboard (Firebase) overrides any of this once the office saves its own version.
 
-export const CATEGORIES = ['Health', 'Education', 'Roads and water', 'Coffee and tea', 'Youth and sports', 'Other']
+export const CATEGORIES = ['Health', 'Education', 'Roads', 'Water', 'Coffee and tea', 'Youth and sports', 'Other']
+
+// Roads and water used to be one category. Items saved with it (e.g. in the database) are sorted
+// into Roads or Water by their wording, on the site and when edited in the dashboard.
+export function fixCategory(item) {
+  if (!item || item.category !== 'Roads and water') return item
+  const text = `${item.title || ''} ${item.description || ''}`
+  const water = /water|borehole|tank|dam|pipeline|harvest|irrigation/i.test(item.title || '') || (!/road|street|bridge|tarmac/i.test(text) && /water/i.test(text))
+  return { ...item, category: water ? 'Water' : 'Roads' }
+}
 export const NEWS_CATEGORIES = ['Parliament', 'Press coverage', 'Statements', 'Events']
 export const GALLERY_CATEGORIES = ['Parliament', 'Constituency', 'Events', 'Committee', 'Community']
 
@@ -103,7 +112,7 @@ export const defaults = {
     {
       "id": "muthuaini-gatitu-road",
       "title": "Muthuaini–Gatitu Road tarmacked",
-      "category": "Roads and water",
+      "category": "Roads",
       "year": "",
       "ward": "",
       "amount": 0,
@@ -114,7 +123,7 @@ export const defaults = {
     {
       "id": "oilcom-thunguma-road",
       "title": "Oil Com–Thunguma Road tarmacked",
-      "category": "Roads and water",
+      "category": "Roads",
       "year": "",
       "ward": "",
       "amount": 0,
@@ -125,7 +134,7 @@ export const defaults = {
     {
       "id": "st-jude-road",
       "title": "St. Jude Road tarmacked",
-      "category": "Roads and water",
+      "category": "Roads",
       "year": "",
       "ward": "",
       "amount": 0,
@@ -136,7 +145,7 @@ export const defaults = {
     {
       "id": "ngangarithi-ciaraini-road",
       "title": "Ngangarithi–Ciaraini Road tarmacked",
-      "category": "Roads and water",
+      "category": "Roads",
       "year": "",
       "ward": "",
       "amount": 0,
@@ -334,7 +343,7 @@ export const defaults = {
     {
       "id": "kerra-roads-2025-26",
       "title": "Maintenance of 13 constituency roads (2025/26)",
-      "category": "Roads and water",
+      "category": "Roads",
       "year": "2025/26",
       "ward": "",
       "amount": 0,
@@ -345,7 +354,7 @@ export const defaults = {
     {
       "id": "kerra-roads-2024-25",
       "title": "Maintenance of 15 constituency roads (2024/25)",
-      "category": "Roads and water",
+      "category": "Roads",
       "year": "2024/25",
       "ward": "",
       "amount": 0,
@@ -587,7 +596,7 @@ export const defaults = {
     {
       "id": "school-water-harvesting",
       "title": "Rainwater harvesting at ten schools",
-      "category": "Roads and water",
+      "category": "Water",
       "year": "2022/23",
       "ward": "",
       "amount": 2550000,

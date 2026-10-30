@@ -8,7 +8,7 @@
 // Plan and checklist: docs/SEO.md
 import fs from 'node:fs'
 import path from 'node:path'
-import { RETIRED, defaults } from '../src/data/content.js'
+import { RETIRED, defaults, fixCategory } from '../src/data/content.js'
 import { siteConfig } from '../site.config.js'
 
 const DIST = path.resolve('dist')
@@ -114,7 +114,7 @@ async function main() {
     '@type': 'BreadcrumbList',
     itemListElement: [['Home', '/'], ...items].map(([name, url], i) => ({ '@type': 'ListItem', position: i + 1, name, item: abs(url) })),
   })
-  const cats = [...new Set(c.projects.map((x) => x.category).filter(Boolean))].map((x) => x.toLowerCase())
+  const cats = [...new Set(c.projects.map((x) => fixCategory(x).category).filter(Boolean))].map((x) => x.toLowerCase())
 
   const pages = [
     {
