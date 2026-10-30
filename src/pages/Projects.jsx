@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom'
 import Empty from '../components/Empty.jsx'
 import PageHead from '../components/PageHead.jsx'
 import { Reveal } from '../components/Reveal.jsx'
+import { CATEGORIES } from '../data/content.js'
 import { useContent } from '../lib/useContent.js'
 
 export default function Projects() {
   const { projects } = useContent()
   const [cat, setCat] = useState('All')
-  const cats = ['All', ...new Set(projects.map((p) => p.category).filter(Boolean))]
+  // Filters follow the dashboard's category order; any other category comes next, and "Other" is always last.
+  const rank = (c) => (c === 'Other' ? 999 : CATEGORIES.includes(c) ? CATEGORIES.indexOf(c) : 500)
+  const cats = ['All', ...[...new Set(projects.map((p) => p.category).filter(Boolean))].sort((a, b) => rank(a) - rank(b))]
   const shown = cat === 'All' ? projects : projects.filter((p) => p.category === cat)
 
   return (
