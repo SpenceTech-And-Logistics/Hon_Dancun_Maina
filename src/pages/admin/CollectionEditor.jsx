@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { getDb } from '../../lib/firebase.js'
 import { csvTemplate, readRecords, saveText } from '../../lib/importer.js'
 import { useContent } from '../../lib/useContent.js'
-import { fixCategory } from '../../data/content.js'
+import { fixCategory, hiddenKeys } from '../../data/content.js'
 import { Field } from './Fields.jsx'
 
 /**
@@ -77,7 +77,13 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
   async function remove(id) {
     try {
       const { fs, db } = await getDb()
+      const item = (items || []).find((i) => i.id === id)
       await fs.deleteDoc(fs.doc(db, coll, id))
+      // Remember the deletion so the site does not bring back a built-in copy of this item.
+      if (item && (coll === 'projects' || coll === 'press')) {
+        const k = hiddenKeys(item)
+        await fs.setDoc(fs.doc(db, 'site', 'hidden'), { [coll]: { ids: fs.arrayUnion(k.id), titles: fs.arrayUnion(k.title) } }, { merge: true })
+      }
       setConfirm('')
       await reload()
     } catch (ex) {

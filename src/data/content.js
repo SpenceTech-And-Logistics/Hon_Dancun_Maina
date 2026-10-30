@@ -18,6 +18,26 @@ export const GALLERY_CATEGORIES = ['Parliament', 'Constituency', 'Events', 'Comm
 // and removed by the dashboard's "Fill the database" page.
 export const RETIRED = { projects: ['tarmac-roads'], press: [] }
 
+const normTitle = (t) => String(t || '').trim().toLowerCase().replace(/\s+/g, ' ')
+const baseKey = (id) => String(id || '').replace(/^seed-/, '').toLowerCase()
+
+/**
+ * What the site shows for projects or news: everything published in the database, plus any built-in
+ * item the database does not have yet (so new content and its photos appear without pressing Fill).
+ * Built-in items the office deleted in the dashboard are listed in site/hidden and stay away.
+ */
+export function combine(remote, builtIn, coll, hidden = {}) {
+  const retired = new Set(RETIRED[coll] || [])
+  const gone = new Set([...(hidden.ids || []), ...(hidden.titles || [])])
+  const have = new Set((remote || []).flatMap((i) => [baseKey(i.id), normTitle(i.title)]))
+  const live = (remote || []).filter((i) => i.status !== 'draft' && !retired.has(baseKey(i.id)))
+  const extra = builtIn.filter((i) => !retired.has(baseKey(i.id)) && !have.has(baseKey(i.id)) && !have.has(normTitle(i.title)) && !gone.has(baseKey(i.id)) && !gone.has(normTitle(i.title)))
+  return [...live, ...extra]
+}
+
+/** Keys to record in site/hidden when the office deletes an item, so a built-in copy does not come back. */
+export const hiddenKeys = (item) => ({ id: baseKey(item.id), title: normTitle(item.title) })
+
 export const defaults = {
   profile: {
     name: 'Hon. Duncan Maina Mathenge',
