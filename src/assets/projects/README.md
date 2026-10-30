@@ -14,6 +14,26 @@ Then `npm run build` and deploy. Photos uploaded in the dashboard still work, an
 
 | File name starts with | Project |
 |---|---|
+| `tarmac-roads` | Tarmacked roads: Muthuaini–Gatitu, Oil Com–Thunguma, St. Jude and Ngangarithi–Ciaraini |
+| `high-masts` | 44 high-mast floodlights across the five wards |
+| `nyakinyua-classrooms` | Two classrooms on the first floor at Nyakinyua Primary School |
+| `kwanderi-asbestos` | Asbestos roofs replaced at Kwanderi Primary School |
+| `muruguru-primary-jss` | Junior Secondary laboratory and ablution block at Muruguru Primary School |
+| `kingongo-primary` | Cabro paving, laboratory and classrooms at King'ong'o Primary School |
+| `nyeri-primary-classrooms` | Classrooms and ablution block at Nyeri Primary School |
+| `giakanja-cabros-lab` | Cabro paving and laboratory at Giakanja Primary School |
+| `githwariga-comprehensive` | Paving and compound works at Githwariga Comprehensive School |
+| `deb-muslim-cabros` | Cabro paving at DEB Muslim Comprehensive School |
+| `muthuaini-girls-dormitory` | Dormitory at Muthuaini Girls |
+| `gitathiini-primary-wall` | Perimeter wall at Gitathiini Primary School |
+| `kihatha-wall` | Perimeter wall at Kihatha Primary School |
+| `ruringu-stadium` | Ruring'u Stadium (under construction) |
+| `ruringu-ahp` | Ruring'u Affordable Housing Project (under construction) |
+| `ruringu-youth-centre` | Ruring'u Youth Empowerment Centre (under construction) |
+| `nyeri-polytechnic-hostels` | Hostels at Nyeri National Polytechnic (under construction) |
+| `pgh-surgical-centre` | Surgical centre at Nyeri Provincial General Hospital (under construction) |
+| `kerra-roads-2025-26` | Maintenance of 13 constituency roads (2025/26) |
+| `kerra-roads-2024-25` | Maintenance of 15 constituency roads (2024/25) |
 | `thunguma-ablution` | Ablution block at Thunguma Primary School |
 | `moi-complex-classrooms` | Two classrooms at Moi Complex Primary School |
 | `muthuaini-ablution` | Ablution block at Muthua-ini Primary School |

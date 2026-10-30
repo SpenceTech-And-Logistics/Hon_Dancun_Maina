@@ -65,7 +65,7 @@ export function ContentProvider({ children }) {
   const value = useMemo(() => {
     const r = remote
     const published = (items) => items.filter((i) => i.status !== 'draft')
-    const projects = (r && r.projects.length ? published(r.projects) : [...defaults.projects]).sort(byDateDesc).map(withProjectPhotos)
+    const projects = (r && r.projects.length ? published(r.projects) : [...defaults.projects]).sort(byDateDesc).map(withProjectPhotos).sort((a, b) => Number(Boolean(b.photos?.length)) - Number(Boolean(a.photos?.length)))
     const press = (r && r.press.length ? published(r.press) : [...defaults.press]).sort(byDateDesc).map(withNewsImage)
     const gallery = r && r.gallery.length ? published(r.gallery) : defaults.gallery
     return {

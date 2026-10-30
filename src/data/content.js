@@ -97,6 +97,204 @@ export const defaults = {
   // Projects: NG-CDF Nyeri Town allocations for 2022/23 (nyeri-town.ngcdf.go.ke) and press reports.
   projects: [
     {
+      "id": "tarmac-roads",
+      "title": "Tarmacked roads: Muthuaini–Gatitu, Oil Com–Thunguma, St. Jude and Ngangarithi–Ciaraini",
+      "category": "Roads and water",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Four roads in the constituency upgraded to tarmac: Muthuaini–Gatitu Road, Oil Com–Thunguma Road, St. Jude Road and Ngangarithi–Ciaraini Road. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "high-masts",
+      "title": "44 high-mast floodlights across the five wards",
+      "category": "Other",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "High-mast floodlights installed across Nyeri Town Constituency for safer streets and longer trading hours. Kiganjo-Mathari Ward: Kahiga Dispensary, Gachika Road junction, Ndurutu Road junction, Kirichu village near the cattle dip, Mwenji village–Maharu, Mathari transformer (hostels), Gachika Secondary, Gov Gakuru Road junction, Kahawa Ridge, Nyaribo Samaki Road; Gatitu-Muruguru Ward: Gatitu/Kihuru Road, Kiamuiru/JR Road junction, Kambara village road junction, Marua shopping centre, Misha kwa Waiharu, Githiru–Kiangirima Road, Njuriga Coffee Factory, Kagayu Road junction; Ruring'u Ward: Ruring'u Chief's office, Chorongi centre, Ishamwenge village, Kiunyu junction, Kambi Moto quarry, Ibauini centre, Gathugu–Gitathiini junction; Rware Ward: Chania Maua, Chania Methodist, Kwa Don Kangemi, Chania–Jumea area, King'ong'o Prison, Garden Estate; Kamakwa-Mukaro Ward: Ngangarithi Primary junction, Hekima junction, Gitathiini near the Catholic church, Gitathiini near the Independent church, Muthuaini behind the shops, Kamakwa near Kungu Maitu, Munungai-ini near Tetu Girls, Kinunga near the dispensary, Penjiru Road junction, Ciara-ini near the Catholic church, Gikurwe-ini Road junction, Gachuyo Road junction, Kamakwa Metropolitan.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "nyakinyua-classrooms",
+      "title": "Two classrooms on the first floor at Nyakinyua Primary School",
+      "category": "Education",
+      "year": "2024/25",
+      "ward": "",
+      "amount": 0,
+      "description": "Construction of two classrooms on the first floor at Nyakinyua Primary School, funded by NG-CDF Nyeri Town in financial year 2024/2025.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "kwanderi-asbestos",
+      "title": "Asbestos roofs replaced at Kwanderi Primary School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Old asbestos roofing removed from the classroom blocks at Kwanderi Primary School and replaced with new iron sheets, making the classrooms safer for learners. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "muruguru-primary-jss",
+      "title": "Junior Secondary laboratory and ablution block at Muruguru Primary School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A new laboratory for Junior Secondary learners, which its sign credits as fully funded by the KPC Foundation, and an NG-CDF ablution block with a water tank. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "kingongo-primary",
+      "title": "Cabro paving, laboratory and classrooms at King'ong'o Primary School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A two-storey block with a laboratory and classrooms, and a cabro-paved compound. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "nyeri-primary-classrooms",
+      "title": "Classrooms and ablution block at Nyeri Primary School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "New classrooms and an ablution block. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "giakanja-cabros-lab",
+      "title": "Cabro paving and laboratory at Giakanja Primary School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A cabro-paved driveway and compound, and a laboratory for Junior Secondary learners. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "githwariga-comprehensive",
+      "title": "Paving and compound works at Githwariga Comprehensive School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Cabro paving and compound improvements at the school. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "deb-muslim-cabros",
+      "title": "Cabro paving at DEB Muslim Comprehensive School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A cabro-paved driveway and compound. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "muthuaini-girls-dormitory",
+      "title": "Dormitory at Muthuaini Girls",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A new two-storey dormitory. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "gitathiini-primary-wall",
+      "title": "Perimeter wall at Gitathiini Primary School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A masonry perimeter wall around St. Augustine Gitathi-ini Comprehensive School, improving security for learners. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "kihatha-wall",
+      "title": "Perimeter wall at Kihatha Primary School",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A perimeter wall around the school grounds. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "ruringu-stadium",
+      "title": "Ruring'u Stadium (under construction)",
+      "category": "Youth and sports",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Construction of the new Ruring'u Stadium, with the stands taking shape. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "ruringu-ahp",
+      "title": "Ruring'u Affordable Housing Project (under construction)",
+      "category": "Other",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Affordable housing blocks under construction at Ruring'u. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "ruringu-youth-centre",
+      "title": "Ruring'u Youth Empowerment Centre (under construction)",
+      "category": "Youth and sports",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A youth empowerment centre under construction at Ruring'u. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "nyeri-polytechnic-hostels",
+      "title": "Hostels at Nyeri National Polytechnic (under construction)",
+      "category": "Education",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Student hostels under construction at Nyeri National Polytechnic. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "pgh-surgical-centre",
+      "title": "Surgical centre at Nyeri Provincial General Hospital (under construction)",
+      "category": "Health",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "A new surgical centre under construction at the Provincial General Hospital. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
       "id": "kerra-roads-2025-26",
       "title": "Maintenance of 13 constituency roads (2025/26)",
       "category": "Roads and water",
@@ -169,7 +367,7 @@ export const defaults = {
       "year": "2023/24",
       "ward": "",
       "amount": 0,
-      "description": "A new ablution block for the school's learners. Completed under NG-CDF Nyeri Town, financial year 2023/24.",
+      "description": "A new ablution block for the school's learners. Completed under NG-CDF Nyeri Town, financial year 2023/24. The school's compound was also cabro-paved and a modern laboratory built, as shown in the office's project video.",
       "photos": [],
       "status": "published"
     },
@@ -279,7 +477,7 @@ export const defaults = {
       "year": "2022/23",
       "ward": "",
       "amount": 6000000,
-      "description": "Four classrooms on a storied block. Allocated under the NG-CDF budget for 2022/23 (Nyeri Town Constituency).",
+      "description": "Four classrooms on a storied block. Allocated under the NG-CDF budget for 2022/23 (Nyeri Town Constituency). The office's project video shows the completed block with a laboratory, four classrooms and an ablution block.",
       "photos": [],
       "status": "published"
     },
