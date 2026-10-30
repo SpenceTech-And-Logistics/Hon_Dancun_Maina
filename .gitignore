@@ -6,3 +6,4 @@ dist
 *.local
 *:Zone.Identifier
 .DS_Store
+video/
