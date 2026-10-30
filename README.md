@@ -39,3 +39,7 @@ npx wrangler deploy
 ## Filling a new database
 
 After Firebase is connected and your account is in `admins`, open `/admin/starter` (“Fill the database” in the dashboard menu) and press the button. It writes the profile, career, education, Parliament record, contact details and news into Firestore. Items already in the database are kept unless you tick “Replace”, so it is safe to press again.
+
+## SEO
+
+`npm run build` also writes per-page titles, descriptions, share previews, structured data, `sitemap.xml` and `robots.txt` from the live content (`scripts/seo.mjs`). Set `siteUrl` in `site.config.js` once the domain is live. The plan and checklist are in `docs/SEO.md`.

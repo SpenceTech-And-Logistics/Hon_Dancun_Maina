@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Lightbox from '../components/Lightbox.jsx'
 import { Reveal } from '../components/Reveal.jsx'
@@ -10,6 +10,9 @@ export default function ProjectDetail() {
   const { projects } = useContent()
   const [open, setOpen] = useState(-1)
   const project = projects.find((p) => p.id === id)
+  useEffect(() => {
+    if (project) document.title = `${project.title} | Nyeri Town projects`
+  }, [project])
   const photos = (project?.photos || []).map((src) => ({ src, title: project?.title }))
   const move = (d) => setOpen((i) => (i < 0 ? i : (i + d + photos.length) % photos.length))
   const close = () => setOpen(-1)

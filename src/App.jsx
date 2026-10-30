@@ -31,7 +31,8 @@ function Layout() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
-    const section = TITLES[pathname] || (pathname.startsWith('/projects/') ? 'Project' : '')
+    if (pathname.startsWith('/projects/')) return // the project page sets its own title
+    const section = TITLES[pathname]
     document.title = section
       ? `${section} | Hon. Duncan Maina Mathenge, MP Nyeri Town`
       : 'Hon. Duncan Maina Mathenge | MP for Nyeri Town'
