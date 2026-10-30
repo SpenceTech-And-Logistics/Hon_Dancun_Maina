@@ -13,7 +13,7 @@ Searches we want to win:
 | Duncan Mathenge, Duncan Maina Mathenge, Mathenge Duncan Maina | Home, About |
 | Nyeri Town MP, Member of Parliament Nyeri Town | Home |
 | Nyeri Town projects, NG-CDF Nyeri Town projects | Projects |
-| a school or road name + Nyeri (e.g. "Nyakinyua Primary classrooms", "Muthuaini Gatitu road") | that project's page |
+| a school or road name + Nyeri (e.g. "Nyakinyua Primary classrooms", "Muthuaini Gatitu road", "St. Jude road Nyeri") | that project's page |
 | Duncan Mathenge news, Nyeri Town MP news | News |
 | Duncan Mathenge committees, Bills, cohesion committee | Parliament |
 | contact Nyeri Town MP office | Contact |
@@ -44,7 +44,7 @@ Done
 - [x] Share image; project photos used as previews
 - [x] Crawler-readable summary on every page
 - [x] Dashboard kept out of search results
-- [x] 47 projects and 9 news stories, each with a descriptive title naming the place
+- [x] 50 projects and 9 news stories, each with a descriptive title naming the place (each tarmacked road has its own page)
 
 To do
 - [ ] **Domain.** Put the live address in `site.config.js` → `siteUrl` (e.g. `"https://www.duncanmathenge.co.ke"`). Until then, canonical links and `sitemap.xml` are skipped.
@@ -53,7 +53,7 @@ To do
 - [ ] **Official social links.** Once the office confirms them, add them in the dashboard (Contact and social links). They are added to the `Person` data automatically, which helps Google link the site to his profiles.
 - [ ] **Link the site from his profiles.** Website field on his Facebook page and X accounts, and ask Parliament / Mzalendo to list it.
 - [ ] **Portrait photo.** Upload one; it will also replace the default share image on Home and About.
-- [ ] **Projects without photos** (22). Photos help image search and sharing.
+- [ ] **Projects without photos** (22), and more angles for the four roads (one photo each so far). Photos help image search and sharing.
 - [ ] **Years for the video projects.** Dated content ranks better for "latest" searches.
 - [ ] **Office address and phone.** Add them in the dashboard; then consider a Google Business Profile for the constituency office.
 
@@ -66,3 +66,4 @@ To do
 ## Change log
 
 - **2026-10-30:** SEO set up: per-page HTML, structured data, share image, sitemap and robots generated at build from Firestore or built-in content.
+- **2026-10-30:** Tarmacked roads split into four project pages (Muthuaini–Gatitu, Oil Com–Thunguma, St. Jude, Ngangarithi–Ciaraini), each with its own photo; the old combined page is retired and left out of the sitemap.

@@ -5,6 +5,10 @@ export const CATEGORIES = ['Health', 'Education', 'Roads and water', 'Coffee and
 export const NEWS_CATEGORIES = ['Parliament', 'Press coverage', 'Statements', 'Events']
 export const GALLERY_CATEGORIES = ['Parliament', 'Constituency', 'Events', 'Committee', 'Community']
 
+// Built-in items that have been replaced. Their old copies in the database are hidden on the site
+// and removed by the dashboard's "Fill the database" page.
+export const RETIRED = { projects: ['tarmac-roads'], press: [] }
+
 export const defaults = {
   profile: {
     name: 'Hon. Duncan Maina Mathenge',
@@ -97,13 +101,46 @@ export const defaults = {
   // Projects: NG-CDF Nyeri Town allocations for 2022/23 (nyeri-town.ngcdf.go.ke) and press reports.
   projects: [
     {
-      "id": "tarmac-roads",
-      "title": "Tarmacked roads: Muthuaini–Gatitu, Oil Com–Thunguma, St. Jude and Ngangarithi–Ciaraini",
+      "id": "muthuaini-gatitu-road",
+      "title": "Muthuaini–Gatitu Road tarmacked",
       "category": "Roads and water",
       "year": "",
       "ward": "",
       "amount": 0,
-      "description": "Four roads in the constituency upgraded to tarmac: Muthuaini–Gatitu Road, Oil Com–Thunguma Road, St. Jude Road and Ngangarithi–Ciaraini Road. Shown in the office's project video.",
+      "description": "Muthuaini–Gatitu Road in Nyeri Town Constituency, upgraded to tarmac. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "oilcom-thunguma-road",
+      "title": "Oil Com–Thunguma Road tarmacked",
+      "category": "Roads and water",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Oil Com–Thunguma Road in Nyeri Town Constituency, upgraded to tarmac. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "st-jude-road",
+      "title": "St. Jude Road tarmacked",
+      "category": "Roads and water",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "St. Jude Road in Nyeri Town Constituency, upgraded to tarmac. Shown in the office's project video.",
+      "photos": [],
+      "status": "published"
+    },
+    {
+      "id": "ngangarithi-ciaraini-road",
+      "title": "Ngangarithi–Ciaraini Road tarmacked",
+      "category": "Roads and water",
+      "year": "",
+      "ward": "",
+      "amount": 0,
+      "description": "Ngangarithi–Ciaraini Road in Nyeri Town Constituency, upgraded to tarmac. Shown in the office's project video.",
       "photos": [],
       "status": "published"
     },

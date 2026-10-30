@@ -8,7 +8,7 @@
 // Plan and checklist: docs/SEO.md
 import fs from 'node:fs'
 import path from 'node:path'
-import { defaults } from '../src/data/content.js'
+import { RETIRED, defaults } from '../src/data/content.js'
 import { siteConfig } from '../site.config.js'
 
 const DIST = path.resolve('dist')
@@ -54,12 +54,12 @@ async function loadContent() {
     if (!site) return c
     const docs = Object.fromEntries(site.map((d) => [d.id, d]))
     const merge = (base, over) => ({ ...base, ...Object.fromEntries(Object.entries(over || {}).filter(([, v]) => v !== '' && v != null && !(Array.isArray(v) && !v.length))) })
-    const live = (list) => list.filter((i) => i.status !== 'draft')
+    const live = (list, coll) => list.filter((i) => i.status !== 'draft' && !(RETIRED[coll] || []).includes(String(i.id).replace(/^seed-/, '')))
     c.profile = merge(c.profile, docs.profile)
     c.contact = merge(c.contact, docs.contact)
     c.parliament = merge(c.parliament, docs.parliament)
-    if (projects?.length) c.projects = live(projects)
-    if (press?.length) c.press = live(press)
+    if (projects?.length) c.projects = live(projects, 'projects')
+    if (press?.length) c.press = live(press, 'press')
     c.source = 'Firestore'
   } catch (e) {
     console.warn(`[seo] Could not read Firestore (${e.message}); using built-in content.`)

@@ -5,6 +5,7 @@ import CollectionEditor from './CollectionEditor.jsx'
 import DocEditor from './DocEditor.jsx'
 import Messages from './Messages.jsx'
 import Starter from './Starter.jsx'
+import { pendingCount } from './seedSync.js'
 import {
   contactDefaults, contactFields, galleryConfig, parliamentDefaults, parliamentFields,
   pressConfig, profileDefaults, profileFields, projectsConfig,
@@ -84,6 +85,7 @@ export default function AdminApp() {
   const [user, setUser] = useState(null)
   const [unread, setUnread] = useState(0)
   const [emptyDb, setEmptyDb] = useState(false)
+  const [pending, setPending] = useState(0)
 
   useEffect(() => {
     if (!firebaseReady) return
@@ -124,6 +126,8 @@ export default function AdminApp() {
       try {
         const prof = await fs.getDoc(fs.doc(db, 'site', 'profile'))
         if (alive) setEmptyDb(!prof.exists())
+        const n = await pendingCount().catch(() => 0)
+        if (alive) setPending(n)
         const snap = await fs.getDocs(fs.collection(db, 'messages'))
         if (alive) setUnread(snap.docs.filter((d) => !d.data().read).length)
       } catch {
@@ -208,6 +212,11 @@ export default function AdminApp() {
         {emptyDb && section !== 'starter' && (
           <p className="adm-ok" role="status">
             The database is new and empty. <Link to="/admin/starter">Fill it with the site's verified content</Link> so every section opens ready to edit.
+          </p>
+        )}
+        {!emptyDb && pending > 0 && section !== 'starter' && (
+          <p className="adm-ok" role="status">
+            {pending} item{pending === 1 ? '' : 's'} from the latest site update {pending === 1 ? 'is' : 'are'} not in the database yet (new projects or news, or old entries to remove). <Link to="/admin/starter">Review and update</Link>
           </p>
         )}
         {body}

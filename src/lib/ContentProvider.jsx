@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { defaults } from '../data/content.js'
+import { RETIRED, defaults } from '../data/content.js'
 import { getDb } from './firebase.js'
 import { dropRetired } from './retired.js'
 import { ContentContext } from './useContent.js'
@@ -64,9 +64,9 @@ export function ContentProvider({ children }) {
 
   const value = useMemo(() => {
     const r = remote
-    const published = (items) => items.filter((i) => i.status !== 'draft')
-    const projects = (r && r.projects.length ? published(r.projects) : [...defaults.projects]).sort(byDateDesc).map(withProjectPhotos).sort((a, b) => Number(Boolean(b.photos?.length)) - Number(Boolean(a.photos?.length)))
-    const press = (r && r.press.length ? published(r.press) : [...defaults.press]).sort(byDateDesc).map(withNewsImage)
+    const published = (items, coll) => items.filter((i) => i.status !== 'draft' && !(RETIRED[coll] || []).includes(String(i.id).replace(/^seed-/, '')))
+    const projects = (r && r.projects.length ? published(r.projects, 'projects') : [...defaults.projects]).sort(byDateDesc).map(withProjectPhotos).sort((a, b) => Number(Boolean(b.photos?.length)) - Number(Boolean(a.photos?.length)))
+    const press = (r && r.press.length ? published(r.press, 'press') : [...defaults.press]).sort(byDateDesc).map(withNewsImage)
     const gallery = r && r.gallery.length ? published(r.gallery) : defaults.gallery
     return {
       profile: merge(defaults.profile, dropRetired(r?.docs.profile)),

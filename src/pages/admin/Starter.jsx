@@ -1,42 +1,7 @@
 import { useEffect, useState } from 'react'
-import { defaults } from '../../data/content.js'
+import { check, needsAction, norm } from './seedSync.js'
 import { getDb } from '../../lib/firebase.js'
 import { useContent } from '../../lib/useContent.js'
-
-/**
- * Copies the site's built-in content (verified from Parliament, Mzalendo and the press)
- * into Firestore so the office can edit it from the dashboard.
- * Anything already in the database is left alone unless "Replace" is ticked.
- */
-const strip = ({ id, ...rest }) => {
-  void id
-  return rest
-}
-
-function plan() {
-  return [
-    { label: 'Profile and career', path: ['site', 'profile'], data: defaults.profile },
-    { label: 'Parliament record', path: ['site', 'parliament'], data: defaults.parliament },
-    { label: 'Contact and social links', path: ['site', 'contact'], data: defaults.contact },
-    ...defaults.press.map((p) => ({ label: `News: ${p.title}`, path: ['press', `seed-${p.id}`], data: { status: 'published', ...strip(p) }, stamp: true })),
-    ...defaults.projects.map((p, i) => ({ label: `Project: ${p.title}`, path: ['projects', `seed-${p.id || i}`], data: { status: 'published', ...strip(p) }, stamp: true })),
-    ...defaults.gallery.map((g, i) => ({ label: `Gallery: ${g.title}`, path: ['gallery', `seed-${g.id || i}`], data: { status: 'published', ...strip(g) }, stamp: true })),
-  ]
-}
-
-const norm = (t) => String(t || '').trim().toLowerCase().replace(/\s+/g, ' ')
-
-async function check() {
-  const { fs, db } = await getDb()
-  const list = plan()
-  const titles = {}
-  for (const c of ['projects', 'press']) {
-    const snap = await fs.getDocs(fs.collection(db, c))
-    titles[c] = new Set(snap.docs.map((d) => norm(d.data().title)))
-  }
-  const exists = await Promise.all(list.map((r) => fs.getDoc(fs.doc(db, ...r.path)).then((s) => s.exists())))
-  return list.map((r, i) => ({ ...r, exists: exists[i], sameTitle: !exists[i] && Boolean(titles[r.path[0]]?.has(norm(r.data.title))) }))
-}
 
 /** Finds items in projects and news that share a title. Keeps one of each (the seed- copy, so photos
  * in src/assets match it), moves any photos from the extra copies onto it, and deletes the extras. */
@@ -95,6 +60,13 @@ export default function Starter() {
       const batch = fs.writeBatch(db)
       let n = 0
       for (const r of rows) {
+        if (r.remove) {
+          if (r.exists) {
+            batch.delete(fs.doc(db, ...r.path))
+            n++
+          }
+          continue
+        }
         if ((r.exists || r.sameTitle) && !replace) continue
         batch.set(fs.doc(db, ...r.path), r.stamp ? { ...r.data, createdAt: fs.serverTimestamp() } : r.data)
         n++
@@ -109,7 +81,7 @@ export default function Starter() {
     setBusy(false)
   }
 
-  const missing = rows ? rows.filter((r) => !r.exists && !r.sameTitle).length : 0
+  const missing = rows ? rows.filter(needsAction).length : 0
   const [dupes, setDupes] = useState(null)
   useEffect(() => {
     let alive = true
@@ -161,7 +133,7 @@ export default function Starter() {
                   <tr key={r.path.join('/')}>
                     <td>{r.label}</td>
                     <td><code>{r.path.join('/')}</code></td>
-                    <td>{r.exists ? (replace ? 'Yes, will be replaced' : 'Yes, kept as is') : r.sameTitle ? 'Yes (imported), kept as is' : 'Not yet'}</td>
+                    <td>{r.remove ? (r.exists ? 'Yes, will be removed' : 'Already removed') : r.exists ? (replace ? 'Yes, will be replaced' : 'Yes, kept as is') : r.sameTitle ? 'Yes (imported), kept as is' : 'Not yet'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -176,7 +148,7 @@ export default function Starter() {
         </label>
         <div>
           <button type="button" className="adm-btn" onClick={fill} disabled={busy || !rows || (!missing && !replace)}>
-            {busy ? 'Writing…' : replace ? 'Write everything' : missing ? `Add ${missing} missing item${missing === 1 ? '' : 's'}` : 'All filled'}
+            {busy ? 'Writing…' : replace ? 'Write everything' : missing ? `Update ${missing} item${missing === 1 ? '' : 's'}` : 'All up to date'}
           </button>
         </div>
         <small>Items already in the database under the same title (for example from a CSV import) are not added again.</small>
