@@ -93,7 +93,7 @@ export const pressConfig = {
     { key: 'category', label: 'Category', type: 'select', options: NEWS_CATEGORIES },
     { key: 'url', label: 'Link to the article', type: 'url' },
     { key: 'summary', label: 'Short summary', type: 'textarea', wide: true },
-    { key: 'image', label: 'Photo', type: 'image', wide: true, hint: 'Also appears in the Gallery.' },
+    { key: 'image', label: 'Photo', type: 'image', wide: true },
     status,
   ],
   columns: [
@@ -121,7 +121,7 @@ export const pressConfig = {
 export const galleryConfig = {
   coll: 'gallery',
   title: 'Gallery',
-  blurb: 'Standalone photos and videos. Project photos and news photos appear here automatically.',
+  blurb: 'Photos and videos for the Gallery page. Project and news photos are not included; add a photo here to show it in the Gallery.',
   noun: 'Item',
   empty: { type: 'photo', title: '', category: GALLERY_CATEGORIES[0], src: '', url: '', status: 'published' },
   fields: [

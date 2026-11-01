@@ -7,11 +7,11 @@ import { videoInfo } from '../lib/media.js'
 import { useContent } from '../lib/useContent.js'
 
 export default function Gallery() {
-  const { gallery, projects, press } = useContent()
+  const { gallery } = useContent()
   const [cat, setCat] = useState('All')
   const [open, setOpen] = useState(-1)
 
-  // Standalone items + project photos + press images, all in one place.
+  // Only items added in the dashboard's Gallery section. Project and news photos stay on their own pages.
   const all = useMemo(() => {
     const own = gallery.map((g) => {
       if (g.type === 'video') {
@@ -20,12 +20,8 @@ export default function Gallery() {
       }
       return { id: g.id, kind: 'photo', title: g.title, category: g.category, src: g.src, thumb: g.src }
     })
-    const fromProjects = projects.flatMap((p) =>
-      (p.photos || []).map((src, i) => ({ id: `${p.id}-${i}`, kind: 'photo', title: p.title, category: 'Projects', src, thumb: src })),
-    )
-    const fromPress = press.filter((n) => n.image).map((n) => ({ id: `press-${n.id}`, kind: 'photo', title: n.title, category: 'Press', src: n.image, thumb: n.image }))
-    return [...own, ...fromProjects, ...fromPress].filter((i) => i.thumb || i.kind === 'video')
-  }, [gallery, projects, press])
+    return own.filter((i) => i.thumb || i.kind === 'video')
+  }, [gallery])
 
   const cats = ['All', ...new Set(all.map((i) => i.category).filter(Boolean))]
   const shown = cat === 'All' ? all : all.filter((i) => i.category === cat)
@@ -64,7 +60,7 @@ export default function Gallery() {
                 )
               })}
             </div>
-            <p className="note">Photos open in a larger viewer. Pictures from projects and press link back to them.</p>
+            <p className="note">Photos open in a larger viewer.</p>
           </>
         )}
       </section>
