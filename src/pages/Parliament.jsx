@@ -4,20 +4,18 @@ import { useContent } from '../lib/useContent.js'
 
 export default function Parliament() {
   const { parliament: p } = useContent()
-  const total = (p.votes.aye || 0) + (p.votes.no || 0) + (p.votes.absent || 0) || 1
-  const pct = (n) => `${((n || 0) / total) * 100}%`
 
   return (
     <>
       <PageHead
         eyebrow="Parliament"
         title="The record in the National Assembly"
-        lead="Committees, Bills, motions and votes of the Member for Nyeri Town in the 13th Parliament."
+        lead="Committees, Bills and motions of the Member for Nyeri Town in the 13th Parliament."
       />
 
       <section className="wrap section-tight">
         <div className="tiles">
-          {p.stats.map((s, i) => (
+          {p.stats.filter((s) => !/vote/i.test(s.label)).map((s, i) => (
             <Reveal key={s.label} className="tile" delay={i * 80}>
               <b><CountUp to={Number(s.value) || 0} /></b>
               <span>{s.label}</span>
@@ -59,22 +57,8 @@ export default function Parliament() {
       </section>
 
       <section className="wrap section">
-        <div className="split" style={{ alignItems: 'start' }}>
-          <Reveal variant="left">
-            <span className="eyebrow">Voting</span>
-            <h2 className="title" style={{ marginBottom: 24 }}>How he has voted</h2>
-            <Reveal className="votebar" variant="scale" aria-label="Voting record">
-              <i className="a" style={{ '--w': pct(p.votes.aye) }} />
-              <i className="n" style={{ '--w': pct(p.votes.no) }} />
-              <i className="x" style={{ '--w': pct(p.votes.absent) }} />
-            </Reveal>
-            <div className="legend">
-              <span><b>{p.votes.aye}</b> Aye</span>
-              <span><b>{p.votes.no}</b> No</span>
-              <span><b>{p.votes.absent}</b> Absent</span>
-            </div>
-          </Reveal>
-          <Reveal variant="right">
+        <div>
+          <Reveal>
             <span className="eyebrow">Recent motions</span>
             <h2 className="title" style={{ marginBottom: 24 }}>In the House</h2>
             <div className="list">

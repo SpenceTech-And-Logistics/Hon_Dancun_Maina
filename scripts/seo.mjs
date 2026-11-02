@@ -131,7 +131,7 @@ async function main() {
     {
       url: '/parliament', file: 'parliament.html', priority: '0.8',
       title: `Parliamentary record | ${NAME}`,
-      description: clip(`Committees, Bills, motions and votes of ${NAME} in the National Assembly: ${(c.parliament.committees || []).map((x) => `${x.role}, ${x.name}`).join('; ')}.`),
+      description: clip(`Committees, Bills and motions of ${NAME} in the National Assembly: ${(c.parliament.committees || []).map((x) => `${x.role}, ${x.name}`).join('; ')}.`),
       h1: 'Parliamentary record', ld: [crumbs([['Parliament', '/parliament']])],
     },
     {

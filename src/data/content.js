@@ -95,9 +95,7 @@ export const defaults = {
       { value: 5, label: 'Questions' },
       { value: 3, label: 'Papers laid' },
       { value: 25, label: 'Committee reports' },
-      { value: 9, label: 'Recorded votes' },
     ],
-    votes: { aye: 7, no: 1, absent: 1 },
     committees: [
       { name: 'National Cohesion and Equal Opportunity', role: 'Vice-Chairperson', note: 'Elected unopposed by the committee members.' },
       { name: 'Health', role: 'Member', note: 'Departmental Committee on Health.' },
