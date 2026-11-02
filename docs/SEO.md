@@ -71,3 +71,4 @@ To do
 - **2026-10-30:** New built-in projects and news now appear on the site (and in the sitemap) straight away, even before they are added to the database.
 - **2026-11-01:** Gallery shows only photos and videos added in the dashboard's Gallery section; project and news photos stay on their own pages.
 - **2026-11-02:** Projects page split into NG-CDF and National Government tabs with sub-categories (Health, Education, Roads, Water, Youth and sports, National administration, Sanitation, Other); each tab and filter has its own link (e.g. `/projects?fund=NG-CDF&cat=Sanitation`). Project pages show "Funded by". Office can add categories in the dashboard.
+- **2026-11-02:** Projects page opens on an **All Projects** tab (50), alongside NG-CDF (37) and National Government (13).
