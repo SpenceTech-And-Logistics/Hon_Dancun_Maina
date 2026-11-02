@@ -113,10 +113,34 @@ export const defaults = {
       { value: 25, label: 'Committee reports' },
     ],
     committees: [
-      { name: 'National Cohesion and Equal Opportunity', role: 'Vice-Chairperson', note: 'Elected unopposed by the committee members.' },
-      { name: 'Health', role: 'Member', note: 'Departmental Committee on Health.' },
-      { name: 'Public Investments Committee on Commercial Affairs and Energy', role: 'Member', note: '' },
-      { name: 'Parliamentary Coffee and Tea Caucus', role: 'Chair', note: '' },
+      {
+        name: 'National Cohesion and Equal Opportunity',
+        role: 'Vice-Chairperson',
+        note: 'Elected unopposed by the committee members in August 2025.',
+        mandate:
+          'Oversees national cohesion, peace and equal opportunity: it examines the work of the National Cohesion and Integration Commission, including vetting nominees to the Commission, inquires into peace and security between communities, and reports on fairness and inclusion in public service.',
+      },
+      {
+        name: 'Departmental Committee on Health',
+        role: 'Member',
+        note: '',
+        mandate:
+          'Covers health, medical care and health insurance, including universal health coverage. Under Standing Order 216 it investigates and reports on the work of the Ministry of Health, studies its programmes and policies, and reviews the health Bills referred to it.',
+      },
+      {
+        name: 'Public Investments Committee on Commercial Affairs and Energy',
+        role: 'Member',
+        note: '',
+        mandate:
+          'Under Standing Order 206 it examines the reports and accounts of state corporations in the commercial affairs and energy sectors, considers the Auditor-General\'s reports on them, and checks whether they are run autonomously and efficiently.',
+      },
+      {
+        name: 'Parliamentary Coffee and Tea Caucus',
+        role: 'Chair',
+        note: '',
+        mandate:
+          'A group of Members of Parliament that pushes for reforms in the coffee and tea sectors, on which many farmers in Nyeri depend, so that growers earn more from their crops.',
+      },
     ],
     bills: [
       { title: 'The National Hospital Insurance Fund (Amendment) Bill, 2023', year: '2023', status: '' },

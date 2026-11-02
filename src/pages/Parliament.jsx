@@ -1,9 +1,16 @@
 import PageHead from '../components/PageHead.jsx'
 import { CountUp, Reveal } from '../components/Reveal.jsx'
+import { defaults } from '../data/content.js'
 import { useContent } from '../lib/useContent.js'
 
 export default function Parliament() {
   const { parliament: p } = useContent()
+  const key = (n) => String(n || '').toLowerCase().replace(/departmental committee on |committee on /g, '').trim()
+  const committees = (p.committees || []).map((c) => {
+    if (c.mandate) return c
+    const d = defaults.parliament.committees.find((x) => key(x.name) === key(c.name))
+    return d ? { ...c, mandate: d.mandate } : c
+  })
 
   return (
     <>
@@ -25,13 +32,23 @@ export default function Parliament() {
       </section>
 
       <section className="wrap section">
-        <Reveal><span className="eyebrow">Committees</span><h2 className="title" style={{ marginBottom: 28 }}>Where he sits</h2></Reveal>
-        <div className="grid grid-2">
-          {p.committees.map((c, i) => (
-            <Reveal key={c.name} className="card" delay={i * 90}>
+        <Reveal>
+          <span className="eyebrow">Committees</span>
+          <h2 className="title" style={{ marginBottom: 12 }}>Committee membership and mandates</h2>
+          <p className="muted" style={{ maxWidth: 720, marginBottom: 28 }}>The committees and caucus he serves on, his role in each, and what each one is responsible for.</p>
+        </Reveal>
+        <div className="grid committee-grid">
+          {committees.map((c, i) => (
+            <Reveal key={c.name} className="card committee" delay={i * 90}>
               <span className="tag">{c.role}</span>
               <h3>{c.name}</h3>
-              {c.note && <p>{c.note}</p>}
+              {c.mandate && (
+                <div className="mandate">
+                  <span className="mandate-label">Mandate</span>
+                  <p>{c.mandate}</p>
+                </div>
+              )}
+              {c.note && <p className="meta">{c.note}</p>}
             </Reveal>
           ))}
         </div>

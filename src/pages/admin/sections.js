@@ -24,7 +24,7 @@ export const profileFields = [
 
 export const parliamentFields = [
   { key: 'stats', label: 'Figures', hint: 'Figures about votes are not shown on the site.', type: 'list', noun: 'figure', wide: true, fields: [{ key: 'value', label: 'Number', type: 'number' }, { key: 'label', label: 'Label' }] },
-  { key: 'committees', label: 'Committees and caucuses', type: 'list', noun: 'committee', wide: true, fields: [{ key: 'name', label: 'Name' }, { key: 'role', label: 'Role' }, { key: 'note', label: 'Note' }] },
+  { key: 'committees', label: 'Committee membership and mandates', type: 'list', noun: 'committee', wide: true, fields: [{ key: 'name', label: 'Name' }, { key: 'role', label: 'Role' }, { key: 'mandate', label: 'Mandate (what the committee is responsible for)', type: 'textarea' }, { key: 'note', label: 'Note' }] },
   { key: 'bills', label: 'Bills', type: 'list', noun: 'Bill', wide: true, fields: [{ key: 'title', label: 'Bill' }, { key: 'year', label: 'Year' }, { key: 'status', label: 'Status (blank = to be confirmed)' }] },
   { key: 'billsNote', label: 'Note under the Bills table', type: 'textarea', wide: true },
   { key: 'motions', label: 'Recent motions', type: 'list', noun: 'motion', wide: true, fields: [{ key: 'date', label: 'Date' }, { key: 'title', label: 'Motion' }, { key: 'outcome', label: 'Outcome' }] },
