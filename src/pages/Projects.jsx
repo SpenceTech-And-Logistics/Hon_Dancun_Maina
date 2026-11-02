@@ -1,25 +1,36 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import Empty from '../components/Empty.jsx'
 import PageHead from '../components/PageHead.jsx'
 import { Reveal } from '../components/Reveal.jsx'
-import { CATEGORIES } from '../data/content.js'
+import { FUNDS } from '../data/content.js'
 import { useContent } from '../lib/useContent.js'
 
+const FUND_LABEL = { 'NG-CDF': 'NG-CDF Projects', 'National Government': 'National Government Projects' }
+const FUND_NOTE = {
+  'NG-CDF': 'Built with the National Government Constituencies Development Fund for Nyeri Town, which the MP oversees.',
+  'National Government': 'National Government projects in Nyeri Town that the MP has championed and followed up.',
+}
+
 export default function Projects() {
-  const { projects } = useContent()
-  const [cat, setCat] = useState('All')
-  // Filters follow the dashboard's category order; any other category comes next, and "Other" is always last.
-  const rank = (c) => (c === 'Other' ? 999 : CATEGORIES.includes(c) ? CATEGORIES.indexOf(c) : 500)
-  const cats = ['All', ...[...new Set(projects.map((p) => p.category).filter(Boolean))].sort((a, b) => rank(a) - rank(b))]
-  const shown = cat === 'All' ? projects : projects.filter((p) => p.category === cat)
+  const { projects, projectCategories } = useContent()
+  const [params, setParams] = useSearchParams()
+  const counts = Object.fromEntries(FUNDS.map((f) => [f, projects.filter((p) => p.fund === f).length]))
+  const fund = FUNDS.includes(params.get('fund')) ? params.get('fund') : FUNDS.find((f) => counts[f]) || FUNDS[0]
+  const inFund = projects.filter((p) => p.fund === fund)
+
+  // Sub-category filters follow the order set in the dashboard; unlisted ones come next and "Other" is last.
+  const rank = (c) => (c === 'Other' ? 999 : projectCategories.includes(c) ? projectCategories.indexOf(c) : 500)
+  const cats = ['All', ...[...new Set(inFund.map((p) => p.category).filter(Boolean))].sort((a, b) => rank(a) - rank(b))]
+  const cat = cats.includes(params.get('cat')) ? params.get('cat') : 'All'
+  const shown = cat === 'All' ? inFund : inFund.filter((p) => p.category === cat)
+  const go = (f, c) => setParams(c && c !== 'All' ? { fund: f, cat: c } : { fund: f }, { replace: true })
 
   return (
     <>
       <PageHead
         eyebrow="Projects"
         title="Work delivered in Nyeri Town"
-        lead="Health, education, roads, water, coffee and tea, youth and sports: what has been done, where and for whom."
+        lead="NG-CDF and National Government projects in health, education, roads, water, sanitation, youth and sports and national administration: what has been done, where and for whom."
       />
       <section className="wrap section-tight">
         {projects.length === 0 ? (
@@ -30,26 +41,40 @@ export default function Projects() {
           />
         ) : (
           <>
-            <div className="chips" role="group" aria-label="Filter projects" style={{ marginBottom: 28 }}>
-              {cats.map((c) => (
-                <button key={c} type="button" className="chip" aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>
+            <div className="fund-tabs" role="tablist" aria-label="Project type">
+              {FUNDS.map((f) => (
+                <button key={f} type="button" role="tab" aria-selected={fund === f} className="fund-tab" onClick={() => go(f)}>
+                  {FUND_LABEL[f]} <span>{counts[f]}</span>
+                </button>
               ))}
             </div>
-            <div className="grid grid-3">
-              {shown.map((p, i) => (
-                <Reveal key={p.id} delay={(i % 3) * 100}>
-                  <Link to={`/projects/${p.id}`} className="card card-link">
-                    <div className="card-img">{p.photos?.[0] ? <img src={p.photos[0]} alt={p.title} loading="lazy" /> : <div className="img-fallback">{p.category?.[0]}</div>}</div>
-                    <div className="card-body">
-                      <span className="tag">{p.category}</span>
-                      <h3>{p.title}</h3>
-                      {p.description && <p>{p.description.length > 120 ? `${p.description.slice(0, 117)}…` : p.description}</p>}
-                      <span className="meta">{[p.ward, p.year].filter(Boolean).join(' · ')}</span>
-                    </div>
-                  </Link>
-                </Reveal>
-              ))}
-            </div>
+            <p className="note" style={{ margin: '14px 0 22px' }}>{FUND_NOTE[fund]}</p>
+            {cats.length > 2 && (
+              <div className="chips" role="group" aria-label="Filter by category" style={{ marginBottom: 28 }}>
+                {cats.map((c) => (
+                  <button key={c} type="button" className="chip" aria-pressed={cat === c} onClick={() => go(fund, c)}>{c}</button>
+                ))}
+              </div>
+            )}
+            {shown.length === 0 ? (
+              <p className="muted">No {FUND_LABEL[fund]} published yet.</p>
+            ) : (
+              <div className="grid grid-3">
+                {shown.map((p, i) => (
+                  <Reveal key={p.id} delay={(i % 3) * 100}>
+                    <Link to={`/projects/${p.id}`} className="card card-link">
+                      <div className="card-img">{p.photos?.[0] ? <img src={p.photos[0]} alt={p.title} loading="lazy" /> : <div className="img-fallback">{p.category?.[0]}</div>}</div>
+                      <div className="card-body">
+                        <span className="tag">{p.category}</span>
+                        <h3>{p.title}</h3>
+                        {p.description && <p>{p.description.length > 120 ? `${p.description.slice(0, 117)}…` : p.description}</p>}
+                        <span className="meta">{[p.ward, p.year].filter(Boolean).join(' · ')}</span>
+                      </div>
+                    </Link>
+                  </Reveal>
+                ))}
+              </div>
+            )}
           </>
         )}
       </section>

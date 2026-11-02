@@ -12,7 +12,7 @@ Searches we want to win:
 |---|---|
 | Duncan Mathenge, Duncan Maina Mathenge, Mathenge Duncan Maina | Home, About |
 | Nyeri Town MP, Member of Parliament Nyeri Town | Home |
-| Nyeri Town projects, NG-CDF Nyeri Town projects | Projects |
+| Nyeri Town projects, NG-CDF Nyeri Town projects, National Government projects Nyeri Town | Projects (two tabs: NG-CDF and National Government) |
 | a school or road name + Nyeri (e.g. "Nyakinyua Primary classrooms", "Muthuaini Gatitu road", "St. Jude road Nyeri") | that project's page |
 | Duncan Mathenge news, Nyeri Town MP news | News |
 | Duncan Mathenge committees, Bills, cohesion committee | Parliament |
@@ -70,3 +70,4 @@ To do
 - **2026-10-30:** "Roads and water" split into separate **Roads** and **Water** categories (Roads: 6 projects, Water: 1).
 - **2026-10-30:** New built-in projects and news now appear on the site (and in the sitemap) straight away, even before they are added to the database.
 - **2026-11-01:** Gallery shows only photos and videos added in the dashboard's Gallery section; project and news photos stay on their own pages.
+- **2026-11-02:** Projects page split into NG-CDF and National Government tabs with sub-categories (Health, Education, Roads, Water, Youth and sports, National administration, Sanitation, Other); each tab and filter has its own link (e.g. `/projects?fund=NG-CDF&cat=Sanitation`). Project pages show "Funded by". Office can add categories in the dashboard.

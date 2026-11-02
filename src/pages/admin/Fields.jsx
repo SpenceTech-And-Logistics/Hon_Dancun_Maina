@@ -61,6 +61,15 @@ export function Field({ def, value, onChange }) {
         {options.map((o) => <option key={o.value ?? o} value={o.value ?? o}>{o.label ?? o}</option>)}
       </select>,
     )
+  if (type === 'combo') {
+    const listId = `opts-${def.key}`
+    return wrap(
+      <>
+        <input list={listId} value={value ?? ''} onChange={(e) => onChange(e.target.value)} placeholder="Choose or type a new one" />
+        <datalist id={listId}>{(options || []).map((o) => <option key={o} value={o} />)}</datalist>
+      </>,
+    )
+  }
   if (type === 'number') return wrap(<input type="number" min="0" value={value ?? 0} onChange={(e) => onChange(e.target.value === '' ? 0 : Number(e.target.value))} />)
   if (type === 'image') return wrap(<ImageInput value={value} onChange={onChange} side={def.side || 1000} />)
   if (type === 'images') return wrap(<ImageInput value={value} onChange={onChange} multiple max={def.max || 6} />)

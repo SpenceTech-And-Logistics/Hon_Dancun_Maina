@@ -137,7 +137,7 @@ async function main() {
     {
       url: '/projects', file: 'projects.html', priority: '0.9',
       title: `Projects in Nyeri Town | ${NAME}`,
-      description: clip(`${c.projects.length} projects in Nyeri Town Constituency, covering ${cats.join(', ')}: classrooms, laboratories, roads, high-mast lighting and more.`),
+      description: clip(`${c.projects.length} projects in Nyeri Town Constituency: ${c.projects.filter((x) => fixCategory(x).fund === 'NG-CDF').length} NG-CDF and ${c.projects.filter((x) => fixCategory(x).fund === 'National Government').length} National Government, covering ${cats.join(', ')}.`),
       h1: 'Projects in Nyeri Town', ld: [crumbs([['Projects', '/projects']])],
       list: c.projects.map((x) => [x.title, `/projects/${x.id}`]),
     },

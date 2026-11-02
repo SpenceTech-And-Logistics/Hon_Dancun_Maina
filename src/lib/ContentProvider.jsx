@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { combine, defaults, fixCategory } from '../data/content.js'
+import { CATEGORIES, combine, defaults, fixCategory } from '../data/content.js'
 import { getDb } from './firebase.js'
 import { dropRetired } from './retired.js'
 import { ContentContext } from './useContent.js'
@@ -74,6 +74,7 @@ export function ContentProvider({ children }) {
       parliament: merge(defaults.parliament, r?.docs.parliament),
       contact: merge(defaults.contact, r?.docs.contact),
       projects,
+      projectCategories: r?.docs.settings?.projectCategories?.filter(Boolean).length ? r.docs.settings.projectCategories.filter(Boolean) : CATEGORIES,
       press,
       gallery,
       live: Boolean(r),

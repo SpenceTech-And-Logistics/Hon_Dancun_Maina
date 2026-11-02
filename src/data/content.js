@@ -1,16 +1,32 @@
 // Built-in content, taken from the Parliament of Kenya, Mzalendo and TrackMinster.
 // The dashboard (Firebase) overrides any of this once the office saves its own version.
 
-export const CATEGORIES = ['Health', 'Education', 'Roads', 'Water', 'Coffee and tea', 'Youth and sports', 'Other']
+// Project sub-categories (the office can add, rename and reorder them in the dashboard: Project categories).
+export const CATEGORIES = ['Health', 'Education', 'Roads', 'Water', 'Youth and sports', 'National administration', 'Sanitation', 'Other']
+// The two main groups on the Projects page.
+export const FUNDS = ['NG-CDF', 'National Government']
 
-// Roads and water used to be one category. Items saved with it (e.g. in the database) are sorted
-// into Roads or Water by their wording, on the site and when edited in the dashboard.
+const LEGACY = { 'Coffee and tea': 'Other' }
+
+/**
+ * Brings a project up to date: fills in "fund" (NG-CDF or National Government) and the current
+ * sub-category. Items saved before these existed take them from the built-in copy with the same id,
+ * or are sorted by their wording.
+ */
 export function fixCategory(item) {
-  if (!item || item.category !== 'Roads and water') return item
-  const text = `${item.title || ''} ${item.description || ''}`
-  const water = /water|borehole|tank|dam|pipeline|harvest|irrigation/i.test(item.title || '') || (!/road|street|bridge|tarmac/i.test(text) && /water/i.test(text))
-  return { ...item, category: water ? 'Water' : 'Roads' }
+  if (!item) return item
+  if (item.fund) return item
+  const builtIn = defaults.projects.find((d) => d.id === String(item.id || '').replace(/^seed-/, ''))
+  if (builtIn) return { ...item, fund: builtIn.fund, category: builtIn.category }
+  let category = LEGACY[item.category] || item.category
+  if (category === 'Roads and water') {
+    const text = `${item.title || ''} ${item.description || ''}`
+    const water = /water|borehole|tank|dam|pipeline|harvest|irrigation/i.test(item.title || '') || (!/road|street|bridge|tarmac/i.test(text) && /water/i.test(text))
+    category = water ? 'Water' : 'Roads'
+  }
+  return { ...item, category, fund: /national government|state department|kerra|kura|rerec/i.test(item.description || '') ? 'National Government' : 'NG-CDF' }
 }
+
 export const NEWS_CATEGORIES = ['Parliament', 'Press coverage', 'Statements', 'Events']
 export const GALLERY_CATEGORIES = ['Parliament', 'Constituency', 'Events', 'Committee', 'Community']
 
@@ -130,6 +146,7 @@ export const defaults = {
     {
       "id": "muthuaini-gatitu-road",
       "title": "Muthuaini–Gatitu Road tarmacked",
+      "fund": "National Government",
       "category": "Roads",
       "year": "",
       "ward": "",
@@ -141,6 +158,7 @@ export const defaults = {
     {
       "id": "oilcom-thunguma-road",
       "title": "Oil Com–Thunguma Road tarmacked",
+      "fund": "National Government",
       "category": "Roads",
       "year": "",
       "ward": "",
@@ -152,6 +170,7 @@ export const defaults = {
     {
       "id": "st-jude-road",
       "title": "St. Jude Road tarmacked",
+      "fund": "National Government",
       "category": "Roads",
       "year": "",
       "ward": "",
@@ -163,6 +182,7 @@ export const defaults = {
     {
       "id": "ngangarithi-ciaraini-road",
       "title": "Ngangarithi–Ciaraini Road tarmacked",
+      "fund": "National Government",
       "category": "Roads",
       "year": "",
       "ward": "",
@@ -174,6 +194,7 @@ export const defaults = {
     {
       "id": "high-masts",
       "title": "44 high-mast floodlights across the five wards",
+      "fund": "National Government",
       "category": "Other",
       "year": "",
       "ward": "",
@@ -185,6 +206,7 @@ export const defaults = {
     {
       "id": "nyakinyua-classrooms",
       "title": "Two classrooms on the first floor at Nyakinyua Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2024/25",
       "ward": "",
@@ -196,6 +218,7 @@ export const defaults = {
     {
       "id": "kwanderi-asbestos",
       "title": "Asbestos roofs replaced at Kwanderi Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -207,6 +230,7 @@ export const defaults = {
     {
       "id": "muruguru-primary-jss",
       "title": "Junior Secondary laboratory and ablution block at Muruguru Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -218,6 +242,7 @@ export const defaults = {
     {
       "id": "kingongo-primary",
       "title": "Cabro paving, laboratory and classrooms at King'ong'o Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -229,6 +254,7 @@ export const defaults = {
     {
       "id": "nyeri-primary-classrooms",
       "title": "Classrooms and ablution block at Nyeri Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -240,6 +266,7 @@ export const defaults = {
     {
       "id": "giakanja-cabros-lab",
       "title": "Cabro paving and laboratory at Giakanja Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -251,6 +278,7 @@ export const defaults = {
     {
       "id": "githwariga-comprehensive",
       "title": "Paving and compound works at Githwariga Comprehensive School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -262,6 +290,7 @@ export const defaults = {
     {
       "id": "deb-muslim-cabros",
       "title": "Cabro paving at DEB Muslim Comprehensive School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -273,6 +302,7 @@ export const defaults = {
     {
       "id": "muthuaini-girls-dormitory",
       "title": "Dormitory at Muthuaini Girls",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -284,6 +314,7 @@ export const defaults = {
     {
       "id": "gitathiini-primary-wall",
       "title": "Perimeter wall at Gitathiini Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -295,6 +326,7 @@ export const defaults = {
     {
       "id": "kihatha-wall",
       "title": "Perimeter wall at Kihatha Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -306,6 +338,7 @@ export const defaults = {
     {
       "id": "ruringu-stadium",
       "title": "Ruring'u Stadium (under construction)",
+      "fund": "National Government",
       "category": "Youth and sports",
       "year": "",
       "ward": "",
@@ -317,6 +350,7 @@ export const defaults = {
     {
       "id": "ruringu-ahp",
       "title": "Ruring'u Affordable Housing Project (under construction)",
+      "fund": "National Government",
       "category": "Other",
       "year": "",
       "ward": "",
@@ -328,6 +362,7 @@ export const defaults = {
     {
       "id": "ruringu-youth-centre",
       "title": "Ruring'u Youth Empowerment Centre (under construction)",
+      "fund": "National Government",
       "category": "Youth and sports",
       "year": "",
       "ward": "",
@@ -339,6 +374,7 @@ export const defaults = {
     {
       "id": "nyeri-polytechnic-hostels",
       "title": "Hostels at Nyeri National Polytechnic (under construction)",
+      "fund": "National Government",
       "category": "Education",
       "year": "",
       "ward": "",
@@ -350,6 +386,7 @@ export const defaults = {
     {
       "id": "pgh-surgical-centre",
       "title": "Surgical centre at Nyeri Provincial General Hospital (under construction)",
+      "fund": "National Government",
       "category": "Health",
       "year": "",
       "ward": "",
@@ -361,6 +398,7 @@ export const defaults = {
     {
       "id": "kerra-roads-2025-26",
       "title": "Maintenance of 13 constituency roads (2025/26)",
+      "fund": "National Government",
       "category": "Roads",
       "year": "2025/26",
       "ward": "",
@@ -372,6 +410,7 @@ export const defaults = {
     {
       "id": "kerra-roads-2024-25",
       "title": "Maintenance of 15 constituency roads (2024/25)",
+      "fund": "National Government",
       "category": "Roads",
       "year": "2024/25",
       "ward": "",
@@ -383,7 +422,8 @@ export const defaults = {
     {
       "id": "thunguma-ablution",
       "title": "Ablution block at Thunguma Primary School",
-      "category": "Education",
+      "fund": "NG-CDF",
+      "category": "Sanitation",
       "year": "2023/24",
       "ward": "",
       "amount": 0,
@@ -394,6 +434,7 @@ export const defaults = {
     {
       "id": "moi-complex-classrooms",
       "title": "Two classrooms at Moi Complex Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2023/24",
       "ward": "",
@@ -405,7 +446,8 @@ export const defaults = {
     {
       "id": "muthuaini-ablution",
       "title": "Ablution block at Muthua-ini Primary School",
-      "category": "Education",
+      "fund": "NG-CDF",
+      "category": "Sanitation",
       "year": "2023/24",
       "ward": "",
       "amount": 0,
@@ -416,6 +458,7 @@ export const defaults = {
     {
       "id": "giakanja-classroom",
       "title": "New classroom at Giakanja Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2023/24",
       "ward": "",
@@ -427,7 +470,8 @@ export const defaults = {
     {
       "id": "tetu-boys-ablution",
       "title": "Ablution block at Tetu Boys Primary School",
-      "category": "Education",
+      "fund": "NG-CDF",
+      "category": "Sanitation",
       "year": "2023/24",
       "ward": "",
       "amount": 0,
@@ -438,6 +482,7 @@ export const defaults = {
     {
       "id": "kihuyo-lab",
       "title": "Modern science laboratory at Kihuyo Primary and Junior School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2024/25",
       "ward": "",
@@ -449,6 +494,7 @@ export const defaults = {
     {
       "id": "kamuyu-lab",
       "title": "Modern laboratory at Kamuyu Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2024/25 and 2025/26",
       "ward": "",
@@ -460,6 +506,7 @@ export const defaults = {
     {
       "id": "kahiga-dining-furniture",
       "title": "Dining hall furniture for Kahiga Secondary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2024/25",
       "ward": "",
@@ -471,7 +518,8 @@ export const defaults = {
     {
       "id": "chorongi-chiefs-office",
       "title": "Chorongi Assistant Chief's office",
-      "category": "Other",
+      "fund": "NG-CDF",
+      "category": "National administration",
       "year": "2024/25",
       "ward": "",
       "amount": 0,
@@ -482,6 +530,7 @@ export const defaults = {
     {
       "id": "mathari-lab",
       "title": "Science laboratory at Mathari Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -493,6 +542,7 @@ export const defaults = {
     {
       "id": "githwariga-lab",
       "title": "Science laboratory at Githwariga Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -504,6 +554,7 @@ export const defaults = {
     {
       "id": "jss-lab-conversions",
       "title": "Laboratories at Chorongi, Kiamuiru and Tetu Boys primary schools",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -515,6 +566,7 @@ export const defaults = {
     {
       "id": "secondary-labs",
       "title": "Science laboratories at four secondary schools",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -526,6 +578,7 @@ export const defaults = {
     {
       "id": "muruguru-lab",
       "title": "Laboratory at Muruguru Girls High School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -537,6 +590,7 @@ export const defaults = {
     {
       "id": "nyarugumu-classrooms",
       "title": "Four new classrooms at Nyarugumu Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -548,6 +602,7 @@ export const defaults = {
     {
       "id": "nyaribo-classrooms",
       "title": "Two new classrooms at Nyaribo Primary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -559,6 +614,7 @@ export const defaults = {
     {
       "id": "rware-admin",
       "title": "Administration block at Rware High School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -570,6 +626,7 @@ export const defaults = {
     {
       "id": "gitathiini-admin",
       "title": "Two-storey administration block at Gitathiini Secondary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -581,6 +638,7 @@ export const defaults = {
     {
       "id": "nyaribo-sec-admin",
       "title": "Administration block at Nyaribo Secondary School",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -592,6 +650,7 @@ export const defaults = {
     {
       "id": "primary-admin-blocks",
       "title": "Administration blocks at Nyakinyua and Kiambuiri primary schools",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -603,6 +662,7 @@ export const defaults = {
     {
       "id": "bursaries-2022-23",
       "title": "Education bursaries",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2022/23",
       "ward": "",
@@ -614,6 +674,7 @@ export const defaults = {
     {
       "id": "school-water-harvesting",
       "title": "Rainwater harvesting at ten schools",
+      "fund": "NG-CDF",
       "category": "Water",
       "year": "2022/23",
       "ward": "",
@@ -625,7 +686,8 @@ export const defaults = {
     {
       "id": "police-posts",
       "title": "Police posts at Nyaribo, Ithenguri and Githiru",
-      "category": "Other",
+      "fund": "NG-CDF",
+      "category": "National administration",
       "year": "2022/23",
       "ward": "",
       "amount": 3000000,
@@ -636,7 +698,8 @@ export const defaults = {
     {
       "id": "chiefs-offices",
       "title": "Chiefs' and assistant chiefs' offices",
-      "category": "Other",
+      "fund": "NG-CDF",
+      "category": "National administration",
       "year": "2022/23",
       "ward": "",
       "amount": 3500000,
@@ -647,6 +710,7 @@ export const defaults = {
     {
       "id": "sports-tournaments",
       "title": "Constituency and regional sports tournaments",
+      "fund": "NG-CDF",
       "category": "Youth and sports",
       "year": "2022/23",
       "ward": "",
@@ -658,6 +722,7 @@ export const defaults = {
     {
       "id": "nyamachaki-jss",
       "title": "Eight Junior Secondary classrooms at Nyamachaki Primary and JSS",
+      "fund": "NG-CDF",
       "category": "Education",
       "year": "2025",
       "ward": "",
@@ -670,6 +735,7 @@ export const defaults = {
     {
       "id": "giakanja-computers",
       "title": "20 computers for Giakanja Boys High School",
+      "fund": "National Government",
       "category": "Education",
       "year": "2024",
       "ward": "",

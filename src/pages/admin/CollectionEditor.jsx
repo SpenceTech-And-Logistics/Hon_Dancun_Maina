@@ -10,7 +10,7 @@ import { Field } from './Fields.jsx'
  * A list of records (projects, news, gallery) with add, edit, delete and optional import from CSV or JSON.
  * Props: coll, title, blurb, noun, fields, columns, empty, importer?: { columns, example, map }
  */
-export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer, bulkCategories }) {
+export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer, bulkCategories, afterSave }) {
   const { refresh } = useContent()
   const [items, setItems] = useState(null)
   const [editing, setEditing] = useState(null) // null | 'new' | id
@@ -67,6 +67,7 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
       if (JSON.stringify(data).length > 950000) throw new Error('Too large to save. Remove a photo or two, or use smaller photos.')
       if (editing === 'new') await fs.addDoc(fs.collection(db, coll), { ...data, createdAt: fs.serverTimestamp() })
       else await fs.setDoc(fs.doc(db, coll, editing), { ...data, ...(createdAt ? { createdAt } : {}) })
+      if (afterSave) await afterSave(data).catch(() => {})
       await reload()
       setEditing(null)
       setMsg({ text: `${noun} saved. It is live on the site${data.status === 'draft' ? ' once you set it to Published' : ''}.` })

@@ -6,9 +6,10 @@ import DocEditor from './DocEditor.jsx'
 import Messages from './Messages.jsx'
 import Starter from './Starter.jsx'
 import { pendingCount } from './seedSync.js'
+import { useContent } from '../../lib/useContent.js'
 import {
   contactDefaults, contactFields, galleryConfig, parliamentDefaults, parliamentFields,
-  pressConfig, profileDefaults, profileFields, projectsConfig,
+  pressConfig, profileDefaults, profileFields, projectsConfig, settingsDefaults, settingsFields,
 } from './sections.js'
 import '../../styles/admin.css'
 
@@ -20,6 +21,7 @@ const NAV = [
   ['gallery', 'Gallery'],
   ['messages', 'Messages'],
   ['contact', 'Contact and social links'],
+  ['categories', 'Project categories'],
   ['starter', 'Fill the database'],
 ]
 
@@ -86,6 +88,21 @@ export default function AdminApp() {
   const [unread, setUnread] = useState(0)
   const [emptyDb, setEmptyDb] = useState(false)
   const [pending, setPending] = useState(0)
+  const { projectCategories, refresh } = useContent()
+
+  // A category typed into a project that is not in the list yet is added to it.
+  async function addCategory(data) {
+    const c = String(data.category || '').trim()
+    if (!c || projectCategories.includes(c)) return
+    const { fs, db } = await getDb()
+    const snap = await fs.getDoc(fs.doc(db, 'site', 'settings'))
+    const list = snap.exists() && snap.data().projectCategories?.length ? snap.data().projectCategories : projectCategories
+    if (list.includes(c)) return
+    const at = list.indexOf('Other')
+    const next = at >= 0 ? [...list.slice(0, at), c, ...list.slice(at)] : [...list, c]
+    await fs.setDoc(fs.doc(db, 'site', 'settings'), { projectCategories: next }, { merge: true })
+    refresh()
+  }
 
   useEffect(() => {
     if (!firebaseReady) return
@@ -187,8 +204,17 @@ export default function AdminApp() {
     case 'contact':
       body = <DocEditor docId="contact" title="Contact and social links" blurb="Office details and links shown on the Contact page and footer." fields={contactFields} defaults={contactDefaults} />
       break
+    case 'categories':
+      body = <DocEditor docId="settings" title="Project categories" blurb="The categories used to group projects on the Projects page. Add, rename, remove or reorder them." fields={settingsFields} defaults={settingsDefaults} />
+      break
     default:
-      body = <CollectionEditor {...projectsConfig} />
+      body = (
+        <CollectionEditor
+          {...projectsConfig}
+          fields={projectsConfig.fields.map((f) => (f.key === 'category' ? { ...f, options: projectCategories } : f))}
+          afterSave={addCategory}
+        />
+      )
   }
 
   return (

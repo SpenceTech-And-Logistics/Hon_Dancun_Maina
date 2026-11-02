@@ -1,4 +1,4 @@
-import { CATEGORIES, GALLERY_CATEGORIES, NEWS_CATEGORIES, defaults } from '../../data/content.js'
+import { CATEGORIES, FUNDS, GALLERY_CATEGORIES, NEWS_CATEGORIES, defaults } from '../../data/content.js'
 
 const status = { key: 'status', label: 'Status', type: 'select', options: [{ value: 'published', label: 'Published' }, { value: 'draft', label: 'Draft (hidden)' }] }
 const badge = (it) => (it.status === 'draft' ? 'Draft' : 'Published')
@@ -45,10 +45,11 @@ export const projectsConfig = {
   title: 'Projects',
   blurb: 'Add what was delivered in Nyeri Town. New items show on the site straight away.',
   noun: 'Project',
-  empty: { title: '', category: CATEGORIES[0], year: String(new Date().getFullYear()), ward: '', amount: 0, description: '', photos: [], status: 'published' },
+  empty: { title: '', fund: FUNDS[0], category: CATEGORIES[0], year: String(new Date().getFullYear()), ward: '', amount: 0, description: '', photos: [], status: 'published' },
   fields: [
     { key: 'title', label: 'Title', required: true, wide: true },
-    { key: 'category', label: 'Category', type: 'select', options: CATEGORIES },
+    { key: 'fund', label: 'Project type', type: 'select', options: [{ value: 'NG-CDF', label: 'NG-CDF project' }, { value: 'National Government', label: 'National Government project' }] },
+    { key: 'category', label: 'Category', type: 'combo', options: CATEGORIES, hint: 'Pick one, or type a new category: it is added to the list when you save.' },
     { key: 'year', label: 'Year' },
     { key: 'ward', label: 'Ward' },
     { key: 'amount', label: 'Amount (KES)', type: 'number' },
@@ -58,17 +59,19 @@ export const projectsConfig = {
   ],
   columns: [
     { key: 'title', label: 'Project' },
+    { key: 'fund', label: 'Type' },
     { key: 'category', label: 'Category' },
     { key: 'year', label: 'Year' },
     { key: 'photos', label: 'Photos', render: (it) => (it.photos || []).length },
     { key: 'status', label: 'Status', render: badge },
   ],
   importer: {
-    columns: ['title', 'category', 'year', 'ward', 'amount', 'description'],
-    example: ['Dispensary upgrade', 'Health', '2025', 'Kiganjo/Mathari', '1500000', 'New maternity wing and equipment.'],
+    columns: ['title', 'fund', 'category', 'year', 'ward', 'amount', 'description'],
+    example: ['Dispensary upgrade', 'NG-CDF', 'Health', '2025', 'Kiganjo/Mathari', '1500000', 'New maternity wing and equipment.'],
     map: (r) => ({
       title: String(r.title || '').trim(),
-      category: CATEGORIES.includes(r.category) ? r.category : r.category === 'Roads and water' ? 'Roads' : 'Other',
+      fund: /national/i.test(r.fund || '') ? 'National Government' : 'NG-CDF',
+      category: String(r.category || '').trim() || 'Other',
       year: String(r.year || ''),
       ward: String(r.ward || ''),
       amount: Number(String(r.amount || '0').replace(/[^\d.]/g, '')) || 0,
@@ -143,3 +146,14 @@ export const galleryConfig = {
 export const profileDefaults = defaults.profile
 export const parliamentDefaults = defaults.parliament
 export const contactDefaults = defaults.contact
+
+export const settingsFields = [
+  {
+    key: 'projectCategories',
+    label: 'Project categories',
+    type: 'strings',
+    wide: true,
+    hint: 'These are the filters on the Projects page, in this order ("Other" is always shown last). Renaming one here does not change projects already saved under the old name; edit those projects too.',
+  },
+]
+export const settingsDefaults = { projectCategories: CATEGORIES }

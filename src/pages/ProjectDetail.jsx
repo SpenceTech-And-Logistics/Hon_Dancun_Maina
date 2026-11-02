@@ -19,6 +19,7 @@ export default function ProjectDetail() {
 
   if (!project) return <NotFound />
   const facts = [
+    ['Funded by', project.fund === 'National Government' ? 'National Government' : project.fund ? 'NG-CDF Nyeri Town' : ''],
     ['Category', project.category],
     ['Year', project.year],
     ['Ward', project.ward],
@@ -27,7 +28,7 @@ export default function ProjectDetail() {
   return (
     <>
       <section className="wrap page-head">
-        <Link to="/projects" className="link-arrow rise" style={{ '--d': '0ms' }}>← All projects</Link>
+        <Link to={project.fund ? `/projects?fund=${encodeURIComponent(project.fund)}` : '/projects'} className="link-arrow rise" style={{ '--d': '0ms' }}>← All projects</Link>
         <h1 className="rise" style={{ '--d': '80ms', marginTop: 20 }}>{project.title}</h1>
         {project.description && <p className="lead rise" style={{ '--d': '160ms' }}>{project.description}</p>}
       </section>
