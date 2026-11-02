@@ -70,3 +70,11 @@
 .adm-signin .adm-btn { padding: 15px 24px; font-size: 16px; }
 .adm-signin .adm-link { align-self: flex-start; }
 .adm-uid { display: block; background: #efe9da; padding: 12px; border-radius: 8px; word-break: break-all; user-select: all; }
+
+/* Bulk photo upload (Gallery) */
+.adm-bulk-drop { border: 2px dashed #b9ae92; border-radius: 12px; padding: 32px 20px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; color: var(--forest); cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+.adm-bulk-drop:hover, .adm-bulk-drop:focus-visible, .adm-bulk-drop.on { background: #efe9da; border-color: var(--forest); }
+.adm-bulk-drop small { color: #6b6a5f; }
+.adm-progress { position: relative; max-width: 460px; height: 40px; border-radius: 8px; background: #efe9da; overflow: hidden; }
+.adm-progress i { position: absolute; inset: 0 auto 0 0; background: #cfe0c8; transition: width 0.3s; }
+.adm-progress span { position: relative; display: flex; align-items: center; height: 100%; padding: 0 14px; font-size: 14px; font-weight: 600; color: #1c4733; }

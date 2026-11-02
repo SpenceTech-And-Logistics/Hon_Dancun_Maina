@@ -120,6 +120,7 @@ export const pressConfig = {
 
 export const galleryConfig = {
   coll: 'gallery',
+  bulkCategories: GALLERY_CATEGORIES,
   title: 'Gallery',
   blurb: 'Photos and videos for the Gallery page. Project and news photos are not included; add a photo here to show it in the Gallery.',
   noun: 'Item',

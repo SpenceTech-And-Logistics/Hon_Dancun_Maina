@@ -3,19 +3,21 @@ import { getDb } from '../../lib/firebase.js'
 import { csvTemplate, readRecords, saveText } from '../../lib/importer.js'
 import { useContent } from '../../lib/useContent.js'
 import { fixCategory, hiddenKeys } from '../../data/content.js'
+import BulkPhotos from './BulkPhotos.jsx'
 import { Field } from './Fields.jsx'
 
 /**
  * A list of records (projects, news, gallery) with add, edit, delete and optional import from CSV or JSON.
  * Props: coll, title, blurb, noun, fields, columns, empty, importer?: { columns, example, map }
  */
-export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer }) {
+export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer, bulkCategories }) {
   const { refresh } = useContent()
   const [items, setItems] = useState(null)
   const [editing, setEditing] = useState(null) // null | 'new' | id
   const [form, setForm] = useState(empty)
   const [msg, setMsg] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [bulk, setBulk] = useState(false)
   const [confirm, setConfirm] = useState('')
   const fileRef = useRef(null)
 
@@ -140,9 +142,24 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
               <input ref={fileRef} type="file" accept=".csv,.json,text/csv,application/json" hidden onChange={doImport} />
             </>
           )}
+          {bulkCategories && (
+            <button type="button" className="adm-btn ghost" onClick={() => (setBulk(true), setEditing(null))}>Add photos in bulk</button>
+          )}
           <button type="button" className="adm-btn" onClick={startNew}>Add {noun.toLowerCase()}</button>
         </div>
       </div>
+
+      {bulk && (
+        <BulkPhotos
+          categories={bulkCategories}
+          onClose={() => setBulk(false)}
+          onDone={async (text) => {
+            await reload()
+            setBulk(false)
+            setMsg({ text })
+          }}
+        />
+      )}
 
       {msg && <p className={msg.bad ? 'adm-alert' : 'adm-ok'} role="status">{msg.text}</p>}
 
