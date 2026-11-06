@@ -1,4 +1,4 @@
-import { CATEGORIES, FUNDS, GALLERY_CATEGORIES, NEWS_CATEGORIES, defaults } from '../../data/content.js'
+import { CATEGORIES, FUNDS, GALLERY_CATEGORIES, NEWS_CATEGORIES, defaults, fixCategory } from '../../data/content.js'
 
 const status = { key: 'status', label: 'Status', type: 'select', options: [{ value: 'published', label: 'Published' }, { value: 'draft', label: 'Draft (hidden)' }] }
 const badge = (it) => (it.status === 'draft' ? 'Draft' : 'Published')
@@ -59,7 +59,7 @@ export const projectsConfig = {
   ],
   columns: [
     { key: 'title', label: 'Project' },
-    { key: 'fund', label: 'Type' },
+    { key: 'fund', label: 'Type', render: (it) => (fixCategory(it).fund === 'National Government' ? 'National Govt' : 'NG-CDF') },
     { key: 'category', label: 'Category' },
     { key: 'year', label: 'Year' },
     { key: 'photos', label: 'Photos', render: (it) => (it.photos || []).length },

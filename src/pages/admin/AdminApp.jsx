@@ -7,6 +7,7 @@ import Messages from './Messages.jsx'
 import Starter from './Starter.jsx'
 import { pendingCount } from './seedSync.js'
 import { useContent } from '../../lib/useContent.js'
+import { FUNDS } from '../../data/content.js'
 import {
   contactDefaults, contactFields, galleryConfig, parliamentDefaults, parliamentFields,
   pressConfig, profileDefaults, profileFields, projectsConfig, settingsDefaults, settingsFields,
@@ -213,6 +214,7 @@ export default function AdminApp() {
           {...projectsConfig}
           fields={projectsConfig.fields.map((f) => (f.key === 'category' ? { ...f, options: projectCategories } : f))}
           afterSave={addCategory}
+          filters={{ groupKey: 'fund', groups: FUNDS, groupLabels: { 'NG-CDF': 'NG-CDF', 'National Government': 'National Government' }, catKey: 'category', catOrder: projectCategories }}
         />
       )
   }

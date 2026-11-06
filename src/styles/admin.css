@@ -78,3 +78,14 @@
 .adm-progress { position: relative; max-width: 460px; height: 40px; border-radius: 8px; background: #efe9da; overflow: hidden; }
 .adm-progress i { position: absolute; inset: 0 auto 0 0; background: #cfe0c8; transition: width 0.3s; }
 .adm-progress span { position: relative; display: flex; align-items: center; height: 100%; padding: 0 14px; font-size: 14px; font-weight: 600; color: #1c4733; }
+
+/* Projects list: filters */
+.adm-filters { display: flex; flex-direction: column; gap: 12px; padding: 16px 18px; border-bottom: 1px solid #e6dfcd; }
+.adm-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; background: #efe9da; border-radius: 10px; width: fit-content; max-width: 100%; }
+.adm-tabs button { border: 0; background: transparent; padding: 8px 14px; border-radius: 8px; font: 600 14px inherit; font-family: inherit; color: #1c4733; cursor: pointer; }
+.adm-tabs button[aria-selected='true'] { background: #1c4733; color: #fff; }
+.adm-tabs span, .adm-chips span { font-size: 12px; opacity: 0.75; margin-left: 4px; }
+.adm-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.adm-chips button { border: 1px solid #cfc6ae; background: #fff; padding: 6px 12px; border-radius: 99px; font: 500 13px inherit; font-family: inherit; color: #1c4733; cursor: pointer; }
+.adm-chips button[aria-pressed='true'] { background: #1c4733; border-color: #1c4733; color: #fff; }
+.adm-search { max-width: 360px; padding: 9px 12px; border: 1px solid #cfc6ae; border-radius: 8px; font: inherit; background: #fff; }

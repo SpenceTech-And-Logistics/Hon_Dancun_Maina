@@ -10,9 +10,12 @@ import { Field } from './Fields.jsx'
  * A list of records (projects, news, gallery) with add, edit, delete and optional import from CSV or JSON.
  * Props: coll, title, blurb, noun, fields, columns, empty, importer?: { columns, example, map }
  */
-export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer, bulkCategories, afterSave }) {
+export default function CollectionEditor({ coll, title, blurb, noun, fields, columns, empty, importer, bulkCategories, afterSave, filters }) {
   const { refresh } = useContent()
   const [items, setItems] = useState(null)
+  const [group, setGroup] = useState('All')
+  const [cat, setCat] = useState('All')
+  const [q, setQ] = useState('')
   const [editing, setEditing] = useState(null) // null | 'new' | id
   const [form, setForm] = useState(empty)
   const [msg, setMsg] = useState(null)
@@ -131,6 +134,15 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
 
   const visible = (f) => !f.showIf || f.showIf(form)
 
+  const shownItems = !filters || !items
+    ? items || []
+    : items.filter((raw) => {
+        const it = fixCategory(raw)
+        if (group !== 'All' && it[filters.groupKey] !== group) return false
+        if (cat !== 'All' && it[filters.catKey] !== cat) return false
+        return !q.trim() || String(it.title || '').toLowerCase().includes(q.trim().toLowerCase())
+      })
+
   return (
     <>
       <div className="adm-top">
@@ -183,11 +195,42 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
         ) : items.length === 0 ? (
           <p className="adm-pad">Nothing here yet. Use “Add {noun.toLowerCase()}”{importer ? ' or “Import from file”' : ''}. Until you add one, the public site shows its built-in content.</p>
         ) : (
+          <>
+          {filters && (() => {
+            const all = items.map(fixCategory)
+            const inGroup = group === 'All' ? all : all.filter((it) => it[filters.groupKey] === group)
+            const order = filters.catOrder || []
+            const rank = (c) => (c === 'Other' ? 999 : order.includes(c) ? order.indexOf(c) : 500)
+            const cats = [...new Set(inGroup.map((it) => it[filters.catKey]).filter(Boolean))].sort((a, b) => rank(a) - rank(b))
+            const count = (list, c) => list.filter((it) => it[filters.catKey] === c).length
+            return (
+              <div className="adm-filters">
+                <div className="adm-tabs" role="tablist" aria-label="Project type">
+                  {['All', ...filters.groups].map((g) => (
+                    <button key={g} type="button" role="tab" aria-selected={group === g} onClick={() => (setGroup(g), setCat('All'))}>
+                      {g === 'All' ? 'All projects' : filters.groupLabels?.[g] || g} <span>{g === 'All' ? all.length : all.filter((it) => it[filters.groupKey] === g).length}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className="adm-chips" role="group" aria-label="Category">
+                  {['All', ...cats].map((c) => (
+                    <button key={c} type="button" aria-pressed={cat === c} onClick={() => setCat(c)}>
+                      {c} <span>{c === 'All' ? inGroup.length : count(inGroup, c)}</span>
+                    </button>
+                  ))}
+                </div>
+                <input className="adm-search" type="search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search projects by name…" aria-label="Search projects" />
+              </div>
+            )
+          })()}
           <div className="adm-scroll">
             <table className="adm-table">
               <thead><tr>{columns.map((c) => <th key={c.key}>{c.label}</th>)}<th /></tr></thead>
               <tbody>
-                {items.map((it) => (
+                {shownItems.length === 0 && (
+                  <tr><td colSpan={columns.length + 1} className="adm-pad">No projects match this filter.</td></tr>
+                )}
+                {shownItems.map((it) => (
                   <tr key={it.id}>
                     {columns.map((c) => <td key={c.key}>{c.render ? c.render(it) : fixCategory(it)[c.key]}</td>)}
                     <td className="r">
@@ -208,6 +251,7 @@ export default function CollectionEditor({ coll, title, blurb, noun, fields, col
               </tbody>
             </table>
           </div>
+          </>
         )}
       </div>
     </>
