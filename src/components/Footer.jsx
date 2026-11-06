@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="wrap footer-top">
         <div>
           <div className="brand brand-light">
-            <span className="monogram">DM</span>
+            <span className="monogram">DMM</span>
             <span className="brand-name">
               Hon. Duncan
               <br />

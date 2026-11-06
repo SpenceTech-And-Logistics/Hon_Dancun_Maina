@@ -51,7 +51,7 @@ export default function NewsSlider({ items, interval = 6000, onChange }) {
             aria-hidden={k !== cur}
           >
             <div className="nslide-img">
-              {s.image ? <img src={s.image} alt="" loading={k === 0 ? 'eager' : 'lazy'} /> : <div className="img-fallback">DM</div>}
+              {s.image ? <img src={s.image} alt="" loading={k === 0 ? 'eager' : 'lazy'} /> : <div className="img-fallback">DMM</div>}
             </div>
             <div className="nslide-body">
               <span className="eyebrow">{s.category || 'Featured'}</span>

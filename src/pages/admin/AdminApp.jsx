@@ -64,7 +64,7 @@ function SignIn({ kit }) {
   return (
     <div className="adm-center">
       <form className="adm-signin" onSubmit={submit}>
-        <div className="adm-brand"><span>DM</span><b>Site dashboard</b></div>
+        <div className="adm-brand"><span>DMM</span><b>Site dashboard</b></div>
         <h1>Sign in</h1>
         <p>For Hon. Mathenge's office team. Visitors do not see this page.</p>
         <label>Email<input name="email" type="email" autoComplete="username" required placeholder="office@example.com" /></label>
@@ -220,7 +220,7 @@ export default function AdminApp() {
   return (
     <div className="adm">
       <aside className="adm-side">
-        <div className="adm-brand"><span>DM</span><b>Site dashboard</b></div>
+        <div className="adm-brand"><span>DMM</span><b>Site dashboard</b></div>
         <nav>
           {NAV.map(([key, label]) => (
             <NavLink key={key} to={`/admin/${key}`} className={section === key ? 'active' : ''}>

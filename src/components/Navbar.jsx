@@ -22,7 +22,7 @@ export default function Navbar() {
     <header className={`site-header ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
       <div className="wrap site-header-in">
         <Link to="/" className="brand" onClick={close} aria-label="Hon. Duncan Maina Mathenge, home">
-          <span className="monogram">DM</span>
+          <span className="monogram">DMM</span>
           <span className="brand-name">
             Hon. Duncan
             <br />

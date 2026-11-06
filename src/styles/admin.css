@@ -6,7 +6,7 @@
 .adm-side { flex: 0 0 260px; max-width: 100%; background: var(--ink); color: #e6ece7; padding: 28px 20px; display: flex; flex-direction: column; gap: 24px; }
 @media (min-width: 900px) { .adm-side { position: sticky; top: 0; height: 100vh; } }
 .adm-brand { display: flex; align-items: center; gap: 12px; }
-.adm-brand span { width: 38px; height: 38px; background: var(--forest); color: #fff; border-radius: 9px; display: flex; align-items: center; justify-content: center; font: 500 18px 'Newsreader', serif; }
+.adm-brand span { width: 48px; height: 38px; background: var(--forest); color: #fff; border-radius: 9px; display: flex; align-items: center; justify-content: center; font: 500 14px 'Newsreader', serif; letter-spacing: -0.02em; }
 .adm-brand b { font: 500 17px 'Newsreader', serif; }
 .adm-side nav { display: flex; flex-direction: column; gap: 4px; font-size: 15px; font-weight: 500; }
 .adm-side nav a { padding: 10px 12px; border-radius: 8px; color: inherit; text-decoration: none; display: flex; justify-content: space-between; gap: 8px; transition: background 0.2s; }

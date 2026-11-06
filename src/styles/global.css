@@ -66,7 +66,7 @@ h2.title { font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1; margin-top: 10
 .site-header.is-scrolled { border-color: var(--line); box-shadow: 0 8px 24px -18px rgba(20, 32, 26, 0.5); }
 .site-header.is-scrolled .site-header-in { padding-block: 10px; }
 .brand { display: flex; align-items: center; gap: 12px; }
-.monogram { width: 42px; height: 42px; background: var(--forest); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font: 500 20px var(--serif); transition: transform 0.4s var(--ease), border-radius 0.4s; }
+.monogram { width: 54px; height: 42px; background: var(--forest); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font: 500 16px var(--serif); letter-spacing: 0.02em; transition: transform 0.4s var(--ease), border-radius 0.4s; }
 .brand:hover .monogram { transform: rotate(-6deg) scale(1.06); border-radius: 14px; }
 .brand-name { font: 500 19px/1.1 var(--serif); }
 .brand-light .monogram { background: var(--leaf); }

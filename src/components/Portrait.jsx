@@ -37,7 +37,7 @@ export default function Portrait({ className = '', parallax = true, eager = fals
           <img src={src} alt={`Portrait of ${profile.name}`} loading={eager ? 'eager' : 'lazy'} />
         ) : (
           <div className="portrait-mono" role="img" aria-label={`Monogram of ${profile.name}`}>
-            <span>DM</span>
+            <span>DMM</span>
             <small>Nyeri Town</small>
           </div>
         )}
